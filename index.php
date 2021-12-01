@@ -11,15 +11,10 @@ $twig = new Twig\Environment($loader, [
 
 echo $twig->render('index.html.twig');
 
-?>
-
-
-<?php
-
 require_once('Models/Model.php') ; // Inclusion du modèle
 require_once('Controllers/Controller.php') ;
 
-$controllers = ["home", "posts", "users", "comments"]; // Liste des contrôleurs
+$controllers = ["home", "post", "user", "comment"]; // Liste des contrôleurs
 $controller_default = "home"; // Nom du contrôleur par défaut
 
     if (isset($_GET['controller']) and in_array($_GET['controller'], $controllers)) {

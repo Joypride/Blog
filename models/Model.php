@@ -6,7 +6,7 @@ class Model {
     
     //Constructeur créant l'objet PDO et l'affectant à $db
     public function __construct() {
-        $dsn = "mysql:host=localhost;dbname=portfolio";
+        $dsn = "mysql:host=localhost;dbname=blog";
         $login = "root";
         $mdp = '';
         $this->db = new PDO($dsn, $login, $mdp);

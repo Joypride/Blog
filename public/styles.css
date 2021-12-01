@@ -14,6 +14,7 @@ body {
 
 a:hover {
 	text-decoration: none;
+	color: #000;
 }
 
 .navbar-light .navbar-nav .nav-link ,
@@ -28,7 +29,7 @@ a:hover {
 
 #hero {
 	padding: 80px 0;
-	min-height: 700px;
+	min-height: 600px;
 	position: relative;
 }
 
@@ -68,7 +69,8 @@ a:hover {
 	padding: 25px 60px;
 	padding-right: 10px;
 	margin-top: 95px;
-	font-family: 'Playfair display'
+	font-family: 'Playfair display';
+	margin-bottom: 15px;
 }
 
 .hero-title h1 {
@@ -80,14 +82,8 @@ a:hover {
 	transition: 500ms;
 
 }
-.hero-title a h1:hover {
+.hero-title h1:hover {
 	transform: scale(1.01);
-}
-
-.hero-meta p {
-	font-size: 22px;
-	line-height: 30px;
-	color: #404040;
 }
 
 .author-img , .author-meta{
@@ -120,6 +116,18 @@ a:hover {
 .author-tag {
 	font-size: 14px;
 	color: #818181;
+}
+
+.author-cv {
+	background-color: #EDEDED;
+	border-radius: 50px;
+	color: #000000;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.author-social:hover {
+	background-color: #f4f4f4!important;
 }
 
 .article-card {
@@ -164,24 +172,24 @@ a:hover {
 	color: #404040;
 }
 
-.btn-lg {
+.btn-lg, .author-social {
 	font-size: 18px;
 	padding: 10px 30px;
 }
 
-.btn-light {
+.btn-light, .author-social {
 	border-radius: 50px;
 	font-weight: bold;
 	background-color: #FCFAFA;
 	border: none;
 }
 
-.btn-light:hover , footer .btn-light {
+.btn-light:hover , footer .btn-light, .author-social {
 		background-color: #EDEDED !important;
 		border: none;
 }
 
-footer .btn-light , #social-share .btn-light {
+footer .btn-light , #social-share .btn-light, .author-social {
 	width : 40px;
 	height: 40px;
 	text-align: center;
