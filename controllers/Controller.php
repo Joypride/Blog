@@ -2,41 +2,29 @@
 
 abstract class Controller
 {
+    public $action = 'index';
 
     // Force les classes filles à définir cette méthode
     abstract public function default();
 
     public function __construct() {
         // On teste si un paramètre action existe et s'il correspond à une action du contrôleur
-        if(isset($_GET['action']) and method_exists($this, $_GET['action'])) {
-            $action = $_GET['action'];
-            $this->$action(); // On appelle cette action
-        }
-        else {
-            $this->default(); // Sinon on appelle l'action par défaut
+        if(isset($_GET['action'])) {
+            $this->action = $_GET['action'];; // On appelle cette action
         }
     }
 
 
-    protected function render ($vue, $data = []) {
-        
-        // On extrait les données à afficher
-        extract ($data);
+    protected function render ($view, $data = []) {
 
-        // On teste si la vue existe
-        $file_name = "Views/".$vue.'.php';
+        $loader = new \Twig\Loader\FilesystemLoader('views');
+        $twig = new Twig\Environment($loader, [
 
-        // On fait appel au template si la vue existe
-        if (file_exists($file_name))
-        {
-            require('Views/gestion/template.php') ;
-        }
-        else
-        {
-            // Sinon on affiche la page d'erreur
-            $this->error("La vue n’existe pas !") ;
-        }
+            'cache' => false,
 
+        ]);
+
+        return $twig->render($view, $data);
     }
 
     protected function error($message) {
