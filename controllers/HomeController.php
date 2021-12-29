@@ -1,6 +1,8 @@
 <?php 
 
-class Home extends Controller {
+namespace Controllers;
+
+class HomeController extends Controller {
 
     public function default() {
         return $this->indexAction();
@@ -8,10 +10,5 @@ class Home extends Controller {
 
     public function indexAction() {
         return $this->render('index.html.twig');
-    }
-
-    public function run() {
-        $action = $this->action.'Action';
-        return $this->{$action}();
     }
 }

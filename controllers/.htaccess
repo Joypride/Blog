@@ -1,0 +1,3 @@
++FollowSymlinks
+Rewrite Engine on
+Rewrite Rule ^?controller=home&action=login$ /connexion

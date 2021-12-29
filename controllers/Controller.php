@@ -1,5 +1,7 @@
 <?php
 
+namespace Controllers;
+
 abstract class Controller
 {
     public $action = 'index';
@@ -14,11 +16,15 @@ abstract class Controller
         }
     }
 
+    public function run() {
+        $action = $this->action.'Action';
+        return $this->{$action}();
+    }
 
     protected function render ($view, $data = []) {
 
         $loader = new \Twig\Loader\FilesystemLoader('views');
-        $twig = new Twig\Environment($loader, [
+        $twig = new \Twig\Environment($loader, [
 
             'cache' => false,
 

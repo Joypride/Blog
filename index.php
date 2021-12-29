@@ -1,9 +1,16 @@
 <?php
 
+namespace App;
+
 require 'vendor/autoload.php';
 
-require_once('Models/Model.php') ; // Inclusion du modèle
-require_once('Controllers/Controller.php') ;
+/*use Models\Model;
+use Controllers\UserController;
+use Controllers\HomeController;
+
+$o = new HomeController();
+
+var_dump($o);*/
 
 $controller_default = "Home"; // Nom du contrôleur par défaut
 
@@ -15,12 +22,14 @@ $controller_default = "Home"; // Nom du contrôleur par défaut
     }
         // On détermine le nom de la classe du contrôleur
         $nom_classe = $nom_controller;
+
         // On détermine le nom du fichier contenant la définition du contrôleur
-        $nom_fichier = 'controllers/Controller'.$nom_classe.'.php';
+        $nom_fichier = 'controllers/'.$nom_classe.'Controller.php';
+        $nom_classe = $nom_controller.'Controller';
         // Si le fichier existe, on l'inclut et on instancie un objet de cette classe
     
     if (file_exists($nom_fichier)) {
-        require_once($nom_fichier);
+        $nom_classe = '\\Controllers\\'.$nom_classe;
         $controller = new $nom_classe();
         echo $controller->run();
     }

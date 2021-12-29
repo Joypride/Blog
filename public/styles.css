@@ -295,3 +295,20 @@ footer a {
 		height: 300px;
 	}
 }
+
+/* Login */
+
+.login-form, #login-btn {
+	border-radius: 50px;
+	width: 50%;
+}
+
+.not-member {
+	font-size: 11px;
+	color: inherit;
+}
+
+.register-form, #register-btn {
+	border-radius: 50px;
+	width: 75%;
+}

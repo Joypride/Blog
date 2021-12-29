@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<!-- hero section -->
+<div class="container mb-5" id="hero">
+    <div class="row justify-content-end">
+        <div class="col-lg-6 hero-img-container">
+            <div class="hero-img">
+                <img src="./public/img/register.jpg">
+            </div>
+        </div>	  		
+
+        <div class="col-lg-9">
+            <div class="hero-title">
+                <h1>Inscription</h1>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+            <form method="POST" action="?controller=user&action=dataRegistration">
+                <div class="form-group register-form d-flex">
+                    <input type="text" class="form-control register-form mr-2" id="name" placeholder="Nom" name="name" required>
+                    <input type="text" class="form-control register-form" id="surname" placeholder="Prénom" name="surname" required>
+                  </div>
+                <div class="form-group">
+                  <input type="email" class="form-control register-form" id="email" placeholder="Email" name="email" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control register-form" id="password" placeholder="Mot de passe" name="password" required>
+                </div>
+                <button type="submit" id="register-btn" class="btn deep-purple btn-block ">S'inscrire</button>          
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- hero ends -->
+{% endblock %}
