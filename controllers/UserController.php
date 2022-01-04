@@ -18,14 +18,13 @@ class UserController extends Controller {
         $m = new UserModel();
 
         if(isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']) && isset($_POST['password'])) {
-
             $name = $_POST['name']; 
             $surname = $_POST['surname'];
             $email = $_POST['email'];
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $data = [
             "connexion" => $m->register($name, $surname, $email, $password)
-        ];
+            ];
         }
         return $this->render('register_process.html.twig', $data);
     }
@@ -42,9 +41,10 @@ class UserController extends Controller {
             $email = $_POST['email'];
             $password = $_POST['password'];
             $data = [
-            "connexion" => $m->login($email)
+            "connexion" => $m->login($email, $password)
             ];
-            $this->render('admin.html.twig', $data);
-        }     
+            
+        }
+        return $this->render('admin.html.twig', $data);
     }
 }
