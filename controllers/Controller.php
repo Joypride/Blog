@@ -23,13 +23,13 @@ abstract class Controller
 
     protected function render ($view, $data = []) {
 
-        $loader = new \Twig\Loader\FilesystemLoader('views');
+                $loader = new \Twig\Loader\FilesystemLoader('views');
         $twig = new \Twig\Environment($loader, [
 
             'cache' => false,
 
         ]);
-
+        $data['session'] = $_SESSION;
         return $twig->render($view, $data);
     }
 

@@ -9,13 +9,13 @@
 	  		<div class="col-lg-6 hero-img-container">
 	  			<div class="hero-img">
 	  				<!-- hero img -->
-	  				<img src="./public/img/hero-img-2.jpeg">
+	  				<img src="{{ single.image }}">
 	  			</div>
 	  		</div>	  		
 
 	  		<div class="col-lg-9">
 	  			<div class="hero-title">
-	  				<h1>I tighten my siddur, fail to someone else's</h1>
+	  				<h1>{{ single.title }}</h1>
 	  			</div>
 
 	  		</div>
@@ -23,19 +23,17 @@
 	  		<div class="col-lg-6">
 	  			<div class="hero-meta">
 	  				<div class="author">
-	  					<div class="author-img"><img src="./public/img/author-img.jpg"></div>
+	  					<div class="author-img"><img src="{{ single.photo }}"></div>
 	  					<div class="author-meta">
-	  					<span class="author-name">Celeste Connell</span>
-	  					<span class="author-tag">Travel Blogger</span>
+	  					<span class="author-name">{{ single.surname }} {{ single.name }}</span>
+						<span class="author-tag date mt-2">Posté le: {{ single.creation_date | date("d.m.Y") }}</span>
 	  					</div>	
 	  				</div>
-	  				<span class="date mt-2">25th January, 2019</span>
+					{% if update_date is not same as NULL %}
+					<span class="author-tag date mt-2">Dernière modification le: {{ single.update_date | date("d.m.Y") }}</span>
+					{% endif %}
 	  				<div class="tags mt-2">
-							<a href=""><span class="badge badge-pill p-2 badge-light">#Travel</span></a>
-							<a href="">
-							<span class="badge badge-pill p-2 badge-light">#Flight</span></a>
-							<a href="">
-							<span class="badge badge-pill p-2 badge-light">#Vlogger</span></a>
+							<a href=""><span class="badge badge-pill p-2 badge-light">{{ single.c_title }}</span></a>
 	  				</div>
 	  			</div>
 	  		</div>
@@ -56,61 +54,60 @@
 
 		<!-- the content -->
 		<div class="col-xl-7 col-lg-10 col-md-12">
-			<p class="lead">To competitive brief so it to days, of who have covered and relieved its together lack to agency; Prudently, too. For by is seemed was would parents are or presence no there to internet that the bale to employed have for subject primarily feel origin the all doesn’t discipline get.</p>
+			<p class="lead">{{ single.headline }}</p>
 
-			<p>A laminated is values, the anyone is to found was. Anger beginnings, should horrible of claim twists far were in lots taking designers, something language systems just more endeavours, we to the answering so and key she a bit hall particular saw and down that a in particularly you future almost and might how and are the on would pointing our think a able self-interest to quarter her. </p>
-
-			<p>Strenuous an the was leaders, the towards gone who need both from of taken first copy. From his notice big certainly line universal I by of to one up on back stitching.</p>
-
-			<h3>Our another and princesses by the text</h3>
-
-			<p>Mouth. Our another and princesses by the text, entered commissaries. Discipline set five they understand they’re once without. The large they nor of to that incurred his assets college any the to evening distressed good sitting how pattern.</p>
-
-			<p>And us, review, or that bedding a chief own, commissaries. Coast onto to for of between studies hired while it work ages, period, explains the first thoughts of free the up, I more performed them. Might should film text past with from should day are room. Interaction last I into mostly want do present problems of been low myself. Wellfeigned part the.</p>
-		</div>
-
-		<div class="col-lg-10 mt-3">
-			<hr>
+			<p>{{ single.content}}</p>
 		</div>
 	</div>
 </div>
 
-
-<!-- Related Article Grid -->
-
-<div class="container mt-3 mb-5" id="article-grid">
-	<div class="row">
-
-		<div class="col-xl-6 col-lg-12 text-center">
-			<a href="./single.html">
-			<div class="article-card">
-			<div class="article-img">
-				<img src="./public/img/5.jpeg">
-			</div>
-
-				<div class="article-meta text-left">
-					<h2>To theory equation, more have the or to was the</h2>
-					<p>Herself of that similar live good up which is are to for French endeavours, screen.</p>
+<!-- Comment section -->
+<div class="container mb-5 mt-5">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="text-center mb-5">Commentaires</h3>
+				<div class="row mx-auto">
+					<div class="media col-12 d-flex justify-content-center">
+						<div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
+							<textarea rows="4" cols="100" class="form-control ml-1 shadow-none textarea"></textarea>
+						</div>
+					</div>
 				</div>
-			</div>
-			</a>
-		</div>
-	
-		<div class="col-xl-6 col-lg-12 text-center">
-			<a href="./single.html">
-			<div class="article-card">
-			<div class="article-img">
-				<img src="./public/img/6.jpeg">
-			</div>
-
-				<div class="article-meta text-left">
-					<h2>Morning, it mouth. Harder of </h2>
-					<p>Explain the in fly tone research volunteers and both only the drew cleaning to each language trial.</p>
-				</div>
-			</div>
-			</a>
-		</div>
-
-	</div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="media mt-4"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/stD0Q19.jpg" />
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col-8 d-flex">
+                                        <h5>Maria Smantha</h5> <span>- 2 hours ago</span>
+                                    </div>
+                                </div> It is a long established fact that a reader will be distracted by the readable content of a page. 
+							</div>
+                        </div>
+						<div class="media mt-4"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/xELPaag.jpg" />
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col-8 d-flex">
+                                        <h5>Shad f</h5> <span>- 3 hours ago</span>
+                                    </div>
+                                </div> The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33. 
+                            </div>
+                        </div>
+						<div class="media mt-4"> <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/nUNhspp.jpg" /></a>
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col-8 d-flex">
+                                        <h5>Andy flowe</h5> <span>- 5 hours ago</span>
+                                    </div>
+                                </div> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- End Comment section -->
 {% endblock %}

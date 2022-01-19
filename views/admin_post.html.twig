@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Mes articles{% endblock %}
+
+{% block content %}
+<!-- Add a post -->
+<div class="container mt-2 mb-2 pt-5 pb-5" id="article-grid">
+    <h2 class="text-center">Ajouter un article</h2>
+    <div class="text-center"><a href="?controller=post&action=add"><i class="fas fa-plus-circle fa-5x"></i></a></div>
+</div>
+
+<!-- Pending post grid -->
+<div class="container mt-2 mb-2 pt-5 pb-5" id="article-grid">
+    <h2 class="text-center">En attente de validation (2)</h2>
+    <div class="row">
+        {% for post in pending %}
+        <div class="col-xl-6 col-lg-12 text-center">
+            <a href="?controller=post&action=single">
+                <div class="article-card">
+                    <div class="article-img">
+                        <img src="{{ post.image }}">
+                    </div>
+                    <div class="article-meta text-left">
+                        <h2>{{ post.title }}</h2>
+                        <div class="col-lg-4 post-action d-flex align-items-center">
+                            <div><a href="?controller=post&action=read&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                            <div><a href="?controller=post&action=edit&id={{ post.id }}"><i class="fas fa-pen-fancy mr-4 article-action"></i></a></div>
+                            <div><a href="?controller=post&action=delete&id={{ post.id }}"><i class="fas fa-trash mr-4 article-action"></i></div>
+                            <div class="position-relative"><a href="?controller=post&action=comment&id={{ post.id }}"><i class="far fa-comment-dots article-action"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    2
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div> <!-- Pending post grid Row Ends -->
+</div> <!-- Pending post grid Container Ends -->
+
+<!-- Validated post grid -->
+<div class="container mt-2 mb-2 pt-5 pb-5" id="article-grid">
+    <h2 class="text-center">En ligne (6)</h2>
+    <div class="row">
+        {% for post in validated %}
+        <div class="col-xl-6 col-lg-12 text-center">
+            <a href="?controller=post&action=single">
+                <div class="article-card">
+                    <div class="article-img">
+                        <img src="{{ post.image }}">
+                    </div>
+                    <div class="article-meta text-left">
+                        <h2>{{ post.title }}</h2>
+                        <div class="col-lg-4 post-action d-flex align-items-center">
+                            <div><a href="?controller=post&action=read&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                            <div><a href="?controller=post&action=edit&id={{ post.id }}"><i class="fas fa-pen-fancy mr-4 article-action"></i></a></div>
+                            <div><a href="?controller=post&action=delete&id={{ post.id }}"><i class="fas fa-trash mr-4 article-action"></i></div>
+                            <div class="position-relative"><a href="?controller=post&action=comment&id={{ post.id }}"><i class="far fa-comment-dots article-action"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    2
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div> <!-- Validated post grid Row Ends -->
+</div> <!-- Validated post grid Container Ends -->
+{% endblock %}

@@ -1,3 +1,36 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Admin{% endblock %}
+{% block title %}Mon Compte{% endblock %}
+
+{% block content %}
+<!-- hero section -->
+<div class="container mb-5" id="hero">
+    <div class="row justify-content-end">
+        <div class="col-lg-6 hero-img-container">
+            <div class="hero-img">
+                <img src="./public/img/bonjour.jpg">
+            </div>
+        </div>	  		
+
+        <div class="col-lg-9">
+            <div class="hero-title">
+                <h1>Bonjour, {{ session.surname }}.</h1>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+            <div class="author">
+                <div class="author-img"><img src="./public/img/author-img.jpg"></div>
+                <div class="author-meta">
+                    <span class="author-name">{{ session.surname }} {{ session.name }}</span>
+                </div>
+                <a class="author-cv btn ml-5 mt-3" href="#">Modifier mes informations</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- hero ends -->
+{% endblock %}

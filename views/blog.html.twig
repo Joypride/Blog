@@ -8,24 +8,30 @@
 <div class="container mt-2 mb-2 pt-5 pb-5" id="article-grid">
     <div class="row justify-content-center">
     
+    {% for post in posts %}
       <div class="col-xl-6 col-lg-12 text-center">
-          <a href="?controller=post&action=single">
+          <a href="?controller=post&action=single&id={{ post.id }}">
           <div class="article-card">
           <div class="article-img">
-              <img src="./public/img/1.jpeg">
+              <img src="{{ post.image }}">
           </div>
     
               <div class="article-meta text-left">
-                  <h2>I tighten my siddur</h2>
-                  <p>date</p>
-                  <p>Most of culture that the sensitivity of the condition of puppy love, my lemons.</p>
+                  <h2>{{ post.title }}</h2>
+                  <span class="author-tag date mt-2">Posté le: {{ single.creation_date | date("d.m.Y") }}</span>
+                    {% if update_date is not same as NULL %}
+					<span class="author-tag date mt-2">Dernière modification le: {{ post.updated_date | date("d.m.Y") }}</span>
+				    {% endif %}
+                <p>{{ post.content }}</p>
+                  
               </div>
           </div>
           </a>
       </div>
+    {% endfor %}
     
       <div class="col-xl-6 col-lg-12  text-center">
-          <a href="./single.html">
+          <a href="?controller=post&action=single">
           <div class="article-card">
           <div class="article-img">
               <img src="./public/img/2.jpeg">

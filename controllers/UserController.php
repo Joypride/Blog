@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\UserModel;
+use Models\PostModel;
 
 class UserController extends Controller {
     
@@ -21,7 +22,8 @@ class UserController extends Controller {
             $name = $_POST['name']; 
             $surname = $_POST['surname'];
             $email = $_POST['email'];
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $password = $_POST['password'];
+            // $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $data = [
             "connexion" => $m->register($name, $surname, $email, $password)
             ];
@@ -30,21 +32,44 @@ class UserController extends Controller {
     }
 
     public function loginAction() {
-        return $this->render('login.html.twig');
-    }
-
-    public function dataLoginAction() { 
 
         $m = new UserModel();
+        $errorMessage = NULL;
 
         if(isset($_POST['email']) && isset($_POST['password'])) {
             $email = $_POST['email'];
+            // $password = password_verify($_POST['password'], $m->getPassword());
             $password = $_POST['password'];
-            $data = [
-            "connexion" => $m->login($email, $password)
-            ];
-            
+            $connexion = $m->login($email, $password);
+
+            if($connexion) {
+                if($connexion['activated'] == 1) {
+                $_SESSION['id'] = $connexion['id'];
+                $_SESSION['surname'] = $connexion['surname'];
+
+                return $this->render('admin.html.twig', [
+                    'surname' => $_SESSION['surname'],
+                ]);
+                } else {
+                    $errorMessage = 'Votre profil n\'est pas encore activé';
+                }
+            }
+            else {
+                $errorMessage = 'Vos identifiants sont incorrects';
+            }
         }
-        return $this->render('admin.html.twig', $data);
+        return $this->render('login.html.twig', ['errorMessage' => $errorMessage]);
+    }
+
+    public function accountAction() {
+        return $this->render('admin.html.twig');
+    }
+
+    public function adminPostAction() {
+        $p = new PostModel();
+        return $this->render('admin_post.html.twig', [
+            'pending' => $p->pending(),
+            'validated' => $p->validated(),
+        ]);
     }
 }
