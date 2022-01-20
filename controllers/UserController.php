@@ -73,14 +73,18 @@ class UserController extends Controller {
 
     public function adminPostAction() {
         $p = new PostModel();
+        $l = $p->countValidated();
+        var_dump($l);
         return $this->render('admin_post.html.twig', [
             'pending' => $p->pending(),
             'validated' => $p->validated(),
+            'countp' => $p->countPending(),
+            'countv' => $p->countValidated(),
         ]);
     }
 
     public function logoutAction() {
         session_destroy();
-        return $this->render('index.html.twig');
+        header('Location: /');
     }
 }

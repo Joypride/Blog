@@ -24,7 +24,7 @@
 <table class="table">
     <thead class="thead-light">
       <tr>
-        <th colspan="3" class="text-center">Articles en attente de validation (2)</th>
+        <th colspan="3" class="text-center">Articles en attente de validation ({{ countp | length }})</th>
       </tr>
     </thead>
     <tbody>
@@ -38,7 +38,7 @@
         <td class="align-middle">{{ post.title }}</td>
         <td class="align-middle">
             <div class="col-lg-4 post-action d-flex align-items-center">
-                <div><a href="?controller=post&action=read&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                <div><a href="?controller=post&action=single&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
                 <div><a href="?controller=post&action=edit&id={{ post.id }}"><i class="fas fa-pen-fancy mr-4 article-action"></i></a></div>
                 <div><a href="?controller=post&action=delete&id={{ post.id }}"><i class="fas fa-trash mr-4 article-action"></i></div>
                 <div class="position-relative"><a href="?controller=post&action=comment&id={{ post.id }}"><i class="far fa-comment-dots article-action"></i>
@@ -56,7 +56,7 @@
   <table class="table">
     <thead class="thead-light">
       <tr>
-        <th colspan="3" class="text-center">Articles en ligne (6)</th>
+        <th colspan="3" class="text-center">Articles en ligne ({{ countv | length }})</th>
       </tr>
     </thead>
     <tbody>
@@ -70,7 +70,7 @@
         <td class="align-middle">{{ post.title }}</td>
         <td class="align-middle">
             <div class="col-lg-4 post-action d-flex align-items-center">
-                <div><a href="?controller=post&action=read&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                <div><a href="?controller=post&action=single&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
                 <div><a href="?controller=post&action=edit&id={{ post.id }}"><i class="fas fa-pen-fancy mr-4 article-action"></i></a></div>
                 <div><a href="?controller=post&action=delete&id={{ post.id }}"><i class="fas fa-trash mr-4 article-action"></i></div>
                 <div class="position-relative"><a href="?controller=post&action=comment&id={{ post.id }}"><i class="far fa-comment-dots article-action"></i>

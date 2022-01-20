@@ -4,39 +4,43 @@
 
 {% block content %}
 
-<h1 class="text-center">Ajouter un nouvel article</h1>
+<h1 class="text-center mt-5">Ajouter un nouvel article</h1>
 <div class="contentform">
      
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <form class="wrapp" method="post" role="form" action=" " enctype="multipart/form-data">
+          <form class="wrapp" method="post" role="form" action="?controller=post&action=insert" enctype="multipart/form-data">
             <div class="form-group">
-              <input type="text" class="form-control" name="title" required="required" value="" placeholder="Titre"/>
+              <input type="text" class="form-control" name="title" required="required" placeholder="Titre"/>
             </div>
             <div class="row">
               <div class= "col-md-6">
                 <div class="form-group">
-                    <input type="file" class="bug_cls" name="bimgs" required="required" placeholder="Upload image"/>
+                    <input type="file" class="bug_cls" name="image" required="required" placeholder="Upload image"/>
                 </div>
               </div>
               <div class= "col-md-6">
                 <div class="form-group">
-                  <select type="text" class="form-control" name="tags" required="required">
+                  <select type="text" class="form-control" name="category" required="required">
                     <option value="">Catégorie</option>
-                    <option value="">Bla</option>
+                    {% for c in category %}
+                    <option value="{{ c.id }}">{{ c.title }}</option>
+                    {% endfor %}
                   </select>
                 </div>
               </div>
             </div>
-          
             <div class="form-group">
-              <textarea class="form-control " required="required" value="" name="content" placeholder="Contenu"></textarea>
+                <textarea class="form-control headline-text mb-4" name="headline" required="required" placeholder="Chapô"></textarea>
+              </div>
+            <div class="form-group">
+              <textarea class="form-control" required="required" name="content" placeholder="Contenu"></textarea>
             </div>
             <div class="form-group">
-               <input type="submit" name="Submit" value="Ajouter" class="mt-4" />
+               <input type="submit" value="Ajouter" class="submit-form mt-4" />
             </div>
-            <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
+            <input type="hidden" name="id" value="{{ session.id }}">
           </form>
         </div>
       </div>

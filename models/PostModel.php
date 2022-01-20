@@ -5,6 +5,10 @@ namespace Models;
 class PostModel extends Model {
 
     private $id;
+    private $title;
+    private $headline;
+    private $image;
+    private $content;
 
     public function read()
     {
@@ -16,18 +20,35 @@ class PostModel extends Model {
         return self::getDatabaseInstance()->query("SELECT * FROM post WHERE status = 0 ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
     }
 
+    public function countPending()
+    {
+        return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM post WHERE status = 0")->fetchAll(\PDO::FETCH_NUM);
+    }
+
     public function validated()
     {
         return self::getDatabaseInstance()->query("SELECT * FROM post WHERE status = 1 ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
     }
 
-    public function create($post)
+    public function countValidated()
     {
-        $r = self::getDatabaseInstance()->prepare("INSERT INTO post SET title = :title, headline = :headline, image = :image, content = :content, creation_date = NOW()");
-        $r->bindValue(':title', $title);
-        $r->bindValue(':headline', $headline);
-        $r->bindValue(':image', $image);
-        $r->bindValue(':content', $content);
+        return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM post WHERE status = 1")->fetchAll(\PDO::FETCH_NUM);
+    }
+
+    public function category()
+    {
+        return self::getDatabaseInstance()->query("SELECT DISTINCT c.*, p.category_id FROM category c LEFT JOIN post p ON p.category_id = c.id")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+    }
+
+    public function create(array $post)
+    {
+        $r = self::getDatabaseInstance()->prepare("INSERT INTO post SET title = :title, headline = :headline, image = :image, content = :content, user_id = :user, category_id = :category, creation_date = NOW()");
+        $r->bindValue(':title', $post['title']);
+        $r->bindValue(':headline', $post['headline']);
+        $r->bindValue(':content', $post['content']);
+        $r->bindValue(':image', $post['image']);
+        $r->bindValue(':user', $post['user']);
+        $r->bindValue(':category', $post['category']);
         $r->execute();
     }
 
@@ -41,10 +62,10 @@ class PostModel extends Model {
 
     public function edit($post)
     {
-        $r = self::getDatabaseInstance()->prepare("UPDATE post SET title = :title, headline = :headline, image = :image, content = :content, creation_date = :creation_date, update_date = NOW() WHERE id = :id");
+        $r = self::getDatabaseInstance()->prepare("UPDATE post SET title = :title, headline = :headline, image = :image, content = :content, update_date = NOW() WHERE id = :id");
         $r->bindValue(':title', $title);
         $r->bindValue(':content', $content);
-        $r->bindValue(':publication', $publication);
+        $r->bindValue(':headline', $headline);
         $r->bindValue(':id', $id);
         return $r->execute();
     }
@@ -71,6 +92,86 @@ class PostModel extends Model {
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of title
+     */ 
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set the value of title
+     *
+     * @return  self
+     */ 
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of headline
+     */ 
+    public function getHeadline()
+    {
+        return $this->headline;
+    }
+
+    /**
+     * Set the value of headline
+     *
+     * @return  self
+     */ 
+    public function setHeadline($headline)
+    {
+        $this->headline = $headline;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of image
+     */ 
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set the value of image
+     *
+     * @return  self
+     */ 
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of content
+     */ 
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set the value of content
+     *
+     * @return  self
+     */ 
+    public function setContent($content)
+    {
+        $this->content = $content;
 
         return $this;
     }
