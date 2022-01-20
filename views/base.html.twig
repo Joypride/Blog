@@ -50,7 +50,7 @@
 						{% if session is defined and session.id is defined %}
 						<li class="nav-item">
 							<div class="dropdown-container">
-								<a class="nav-link dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" href="#">Bonjour {{ session.name }}</a>
+								<a class="nav-link dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" href="#">Bonjour {{ session.surname }}</a>
 								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 									<li class="nav-item dropdown-item">
 										<a class="nav-link" href="?controller=user&action=account">Mon Compte</a>
@@ -59,7 +59,7 @@
 										<a class="nav-link" href="?controller=user&action=adminPost">Mes articles</a>
 									</li>
 									<li class="nav-item dropdown-item">
-										<a class="nav-link" href="#">Déconnexion</a>
+										<a class="nav-link" href="?controller=user&action=logout">Déconnexion</a>
 									</li>                  
 								</ul>
 							</div>

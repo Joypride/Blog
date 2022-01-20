@@ -46,9 +46,15 @@ class UserController extends Controller {
                 if($connexion['activated'] == 1) {
                 $_SESSION['id'] = $connexion['id'];
                 $_SESSION['surname'] = $connexion['surname'];
+                $_SESSION['name'] = $connexion['name'];
+                $_SESSION['email'] = $connexion['email'];
+                $_SESSION['photo'] = $connexion['photo'];
 
                 return $this->render('admin.html.twig', [
                     'surname' => $_SESSION['surname'],
+                    'name' => $_SESSION['name'],
+                    'email' => $_SESSION['email'],
+                    'photo' => $_SESSION['photo'],
                 ]);
                 } else {
                     $errorMessage = 'Votre profil n\'est pas encore activé';
@@ -71,5 +77,10 @@ class UserController extends Controller {
             'pending' => $p->pending(),
             'validated' => $p->validated(),
         ]);
+    }
+
+    public function logoutAction() {
+        session_destroy();
+        return $this->render('index.html.twig');
     }
 }

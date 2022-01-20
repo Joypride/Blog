@@ -17,7 +17,7 @@ class UserModel extends Model {
 
     public function login($email, $password)
     {
-        $r = self::getDatabaseInstance()->prepare('SELECT id, surname, email, activated FROM user WHERE email = :email AND password = :password');
+        $r = self::getDatabaseInstance()->prepare('SELECT id, surname, name, email, photo, activated FROM user WHERE email = :email AND password = :password');
         $r->bindValue('email', $email);
         $r->bindValue('password', $password);
         $r->execute();

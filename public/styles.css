@@ -27,6 +27,13 @@ a:hover {
 	background-color: #FCFAFA;
 }
 
+.dropdown-menu {
+	float:left; 
+	margin:auto; 
+	padding:0; 
+	position:relative;
+}
+
 #hero {
 	padding: 80px 0;
 	min-height: 600px;
@@ -189,17 +196,7 @@ a:hover {
 	text-overflow: ellipsis;
 }
 
-.input-title {
-	width: 50%;
-	height: 40px;
-	margin-bottom: 50px;
-}
-  
-  .input-content {
-	width: 50%;
-}
-
-textarea.form-control {
+textarea.form-control, .contentform input, .contentform select {
 	border-radius: 25px;
 }
 
@@ -366,4 +363,195 @@ footer a {
 
 .reply a {
     text-decoration: none
+}
+
+/* Account */
+
+span.round-tab {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    display: inline-block;
+    border-radius: 100px;
+    background: #EDEDED;
+    text-align: center;
+    font-size: 25px;
+	color: #000000;
+}
+
+.nav-info {
+	justify-content: flex-start;
+	list-style: none;
+}
+
+.i-text {
+	color: #888;
+	font-size: 13px;
+}
+
+.article-img-table {
+	max-width: 80px;
+	height: 80px;
+	overflow: hidden;
+	border-radius: 100px;
+}
+
+.article-img-table img {
+	width: 100%;
+	height: auto;
+}
+
+.table {
+	width: 80%;
+	margin: auto;
+}
+
+.add-post {
+	color: #888;
+}
+
+
+
+
+
+
+  .wrapp {
+	border-radius: 5px;
+	max-width:900px;
+	width:100%;
+	margin: 5% auto;
+	background-color: transparent;
+	overflow: hidden;
+  }
+ 
+  input {
+	border-radius: 0px 5px 5px 0px;
+	border: 1px solid #eee;
+	margin-bottom: 15px;
+	width: 75%;
+	height: 40px;
+	float: left;
+	padding: 0px 15px;
+  }
+  
+  textarea {
+	border-radius: 0px 5px 5px 0px;
+	border: 1px solid #EEE;
+	margin: 0;
+	width: 100%;
+	height: 200px !important; 
+	float: left;
+	padding: 1px 15px !important;
+  }
+  
+  .btn {
+	margin-top: 20px !important;
+  }
+  
+  .contentform {
+	padding: 1px 10px;
+  }
+  
+  
+  .btn-file {
+	  position: relative;
+	  overflow: hidden;
+  }
+  
+  .btn-file input[type=file] {
+	  position: absolute;
+	  top: 0;
+	  right: 0;
+	  min-width: 100%;
+	  min-height: 100%;
+	  font-size: 100px;
+	  text-align: right;
+	  filter: alpha(opacity=0);
+	  opacity: 0;
+	  outline: none;
+	  background: white;
+	  cursor: inherit;
+	  display: block;
+  }  
+  
+  .ltbtn{
+	width: 100px;
+	height: auto;
+	float: none;
+	padding: 0px 15px;
+	text-align: center;
+	display: inline-block;
+  }
+  
+  .ltbtn-wrap {
+	margin-left: 0;
+	margin-right: 0;
+	
+	text-align: center;
+  }
+  .ltbtn-wrap .ltbtn.btn{
+	margin-top: 13px !important;
+  }
+  
+  .logintext {
+	color: #d10000;
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+	position: absolute;
+	bottom: 40px;
+  }
+  
+  #btnimg {
+	margin-top: 0 !important;
+  }
+  
+  .bug_cls {
+	  display: block;
+	  width: 100%;
+	  height: 34px;
+	  padding: 6px 12px;
+	  font-size: 14px;
+	  line-height: 1.42857143;
+	  color: #555;
+	  background-color: #fff;
+	  background-image: none;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+	  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+	  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  }
+
+.custom-file {
+	position: relative;
+display: inline-block;
+width: 100%;
+height: calc(2.25rem + 2px);
+margin-bottom: 0;
+}
+
+.custom-file-input {
+position: relative;
+z-index: 2;
+width: 100%;
+height: calc(2.25rem + 2px);
+margin: 0;
+opacity: 0;}
+
+.custom-file-label {
+position: absolute;
+top: 0;
+right: 0;
+left: 0;
+z-index: 1;
+height: calc(2.25rem + 2px);
+padding: 0.375rem 0.75rem;
+line-height: 1.5;
+color: #495057;
+background-color: #fff;
+border: 1px solid #ced4da;
+border-radius: 0.25rem;
 }
