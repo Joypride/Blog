@@ -76,33 +76,17 @@
 				</div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="media mt-4"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/stD0Q19.jpg" />
+						{% for comment in comments %}
+                        <div class="media mt-4"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="{{ comment.photo }}" />
                             <div class="media-body">
                                 <div class="row">
                                     <div class="col-8 d-flex">
-                                        <h5>Maria Smantha</h5> <span>- 2 hours ago</span>
+                                        <h5>{{ comment.surname }} {{ comment.name }}</h5> <span>- {{ comment.date | date('d/m/Y à h:i') }}</span>
                                     </div>
-                                </div> It is a long established fact that a reader will be distracted by the readable content of a page. 
+                                </div>{{ comment.content }} 
 							</div>
                         </div>
-						<div class="media mt-4"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/xELPaag.jpg" />
-                            <div class="media-body">
-                                <div class="row">
-                                    <div class="col-8 d-flex">
-                                        <h5>Shad f</h5> <span>- 3 hours ago</span>
-                                    </div>
-                                </div> The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33. 
-                            </div>
-                        </div>
-						<div class="media mt-4"> <a class="pr-3" href="#"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/nUNhspp.jpg" /></a>
-                            <div class="media-body">
-                                <div class="row">
-                                    <div class="col-8 d-flex">
-                                        <h5>Andy flowe</h5> <span>- 5 hours ago</span>
-                                    </div>
-                                </div> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. 
-                            </div>
-                        </div>
+						{% endfor %}
                     </div>
                 </div>
             </div>

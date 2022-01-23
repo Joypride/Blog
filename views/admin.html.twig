@@ -14,7 +14,7 @@
 
         <div class="col-lg-9">
             <div class="hero-title">
-                <h1>Bonjour, {{ session.surname }}.</h1>
+                <h1>Bonjour, <span class="head-surname">{{ session.surname }}</span>.</h1>
             </div>
 
         </div>
@@ -30,7 +30,7 @@
             <div class="mt-5">
                 <ul class="nav-info d-flex">
                 <li class="mr-5">
-                    <a href="#">
+                    <a href="?controller=user&action=settings&id={{ session.id }}">
                         <span class="round-tab">
                             <i class="fas fa-user-cog"></i>
                         </span>

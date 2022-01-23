@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\PostModel;
+use Models\CommentModel;
 
 class PostController extends Controller {
     
@@ -21,9 +22,11 @@ class PostController extends Controller {
 
     public function singleAction() {
         $m = new PostModel();
+        $c = new CommentModel();
         $id = (int)$_GET['id'];
         return $this->render('single_post.html.twig', [
             'single' => $m->find($id),
+            'comments' => $c->read($id),
         ]);
     }
 
@@ -95,8 +98,7 @@ class PostController extends Controller {
         $m = new PostModel();
         if (!empty($_POST['title']) && !empty($_POST['category']) && !empty($_POST['headline']) && !empty($_POST['content']))
         {
-            $up = new Article($_POST);
-            $m->update($up);
+            //
         }
         return $this->render('edit_post.html.twig');
     }

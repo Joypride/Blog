@@ -15,6 +15,14 @@ class UserModel extends Model {
         return $r->fetch();
     }
 
+    public function pass($email)
+    {
+        $r = self::getDatabaseInstance()->prepare("SELECT password FROM user WHERE email = :email");
+        $r->bindValue('email', $email);
+        $r->execute();
+        return $r->fetchColumn();
+    }
+
     public function login($email, $password)
     {
         $r = self::getDatabaseInstance()->prepare('SELECT id, surname, name, email, photo, activated FROM user WHERE email = :email AND password = :password');
@@ -40,6 +48,16 @@ class UserModel extends Model {
         $q->bindValue(':id', $id, \PDO::PARAM_INT);
         $q->execute();
         return $q->fetch();
+    }
+
+    public function update($user)
+    {
+        $r = self::getDatabaseInstance()->prepare("UPDATE user SET name = :name, surname = :surname, email = :email WHERE id = :id");
+        $r->bindValue(':name', $user['name']);
+        $r->bindValue(':email', $user['email']);
+        $r->bindValue(':surname', $user['surname']);
+        $r->bindValue(':id', $_SESSION['id']);
+        return $r->execute();
     }
 
     /**

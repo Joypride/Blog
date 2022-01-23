@@ -22,7 +22,7 @@ class PostModel extends Model {
 
     public function countPending()
     {
-        return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM post WHERE status = 0")->fetchAll(\PDO::FETCH_NUM);
+        return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM post WHERE status = 0")->fetchColumn();
     }
 
     public function validated()
@@ -32,7 +32,7 @@ class PostModel extends Model {
 
     public function countValidated()
     {
-        return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM post WHERE status = 1")->fetchAll(\PDO::FETCH_NUM);
+        return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM post WHERE status = 1")->fetchColumn();
     }
 
     public function category()

@@ -37,7 +37,7 @@
 		  </button>
 		  <a class="navbar-brand" href="?controller=home&action=index"><img src="./public/img/logo.png"></a>
 				<div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
-					<ul class="menu menu-list navbar-nav" id="menu-list">
+					<ul class="menu menu-list navbar-nav position-absolute" id="menu-list">
 						<li class="nav-item">
 							<a class="nav-link" href="?controller=home&action=index">Accueil</a>
 						</li>
@@ -45,12 +45,12 @@
 							<a class="nav-link" href="?controller=post&action=blog">Blog</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">Contact</a>
+							<a class="nav-link" href="?controller=home&action=contact">Contact</a>
 						</li>
 						{% if session is defined and session.id is defined %}
 						<li class="nav-item">
-							<div class="dropdown-container">
-								<a class="nav-link dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" href="#">Bonjour {{ session.surname }}</a>
+							<div class="dropdown-container position-relative">
+								<a class="nav-link dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" href="#">Bonjour <span class="head-surname">{{ session.surname }}</span></a>
 								<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 									<li class="nav-item dropdown-item">
 										<a class="nav-link" href="?controller=user&action=account">Mon Compte</a>
@@ -87,7 +87,7 @@
 			    <a class="nav-link active" href="?controller=post&action=blog">Blog</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" href="#">Contact</a>
+			    <a class="nav-link" href="?controller=home&action=contact">Contact</a>
 			  </li>			  
 			  <li class="nav-item">
 			    <a class="nav-link" href="?controller=user&action=login">Connexion</a>

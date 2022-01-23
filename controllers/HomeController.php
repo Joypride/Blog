@@ -11,4 +11,8 @@ class HomeController extends Controller {
     public function indexAction() {
         return $this->render('index.html.twig');
     }
+
+    public function contactAction() {
+        return $this->render('contact.html.twig');
+    }
 }
