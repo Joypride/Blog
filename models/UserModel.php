@@ -25,7 +25,7 @@ class UserModel extends Model {
 
     public function login($email, $password)
     {
-        $r = self::getDatabaseInstance()->prepare('SELECT id, surname, name, email, photo, activated FROM user WHERE email = :email AND password = :password');
+        $r = self::getDatabaseInstance()->prepare('SELECT id, surname, name, email, photo, activated, isAdmin FROM user WHERE email = :email AND password = :password');
         $r->bindValue('email', $email);
         $r->bindValue('password', $password);
         $r->execute();
@@ -57,6 +57,17 @@ class UserModel extends Model {
         $r->bindValue(':email', $user['email']);
         $r->bindValue(':surname', $user['surname']);
         $r->bindValue(':id', $_SESSION['id']);
+        return $r->execute();
+    }
+
+    public function allPending()
+    {
+        return self::getDatabaseInstance()->query("SELECT * FROM user WHERE activated = 0")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+    }
+
+    public function delete($id)
+    {
+        $r = self::getDatabaseInstance()->prepare("DELETE FROM user WHERE id =".$id.";");
         return $r->execute();
     }
 

@@ -4,6 +4,8 @@ namespace Controllers;
 
 use Models\UserModel;
 use Models\PostModel;
+use Models\CommentModel;
+use Models\CategoryModel;
 
 class UserController extends Controller {
     
@@ -51,12 +53,14 @@ class UserController extends Controller {
                     $_SESSION['name'] = $connexion['name'];
                     $_SESSION['email'] = $connexion['email'];
                     $_SESSION['photo'] = $connexion['photo'];
+                    $_SESSION['admin'] = $connexion['isAdmin'];
     
                     return $this->render('admin.html.twig', [
                         'surname' => $_SESSION['surname'],
                         'name' => $_SESSION['name'],
                         'email' => $_SESSION['email'],
                         'photo' => $_SESSION['photo'],
+                        'admin' => $_SESSION['admin'],
                     ]);
                     } else {
                         $errorMessage = 'Votre profil n\'est pas encore activé';
@@ -75,13 +79,45 @@ class UserController extends Controller {
     }
 
     public function adminPostAction() {
-        $p = new PostModel();
+        $posts = new PostModel();
+        $tags = new CategoryModel();
+        $id = (int)$_SESSION['id'];
         return $this->render('admin_post.html.twig', [
-            'pending' => $p->pending(),
-            'validated' => $p->validated(),
-            'countp' => $p->countPending(),
-            'countv' => $p->countValidated(),
+            'pending' => $posts->pending($id),
+            'validated' => $posts->validated($id),
+            'refused' => $posts->refused($id),
+            'countp' => $posts->countPending($id),
+            'countv' => $posts->countValidated($id),
+            'countr' => $posts->countRefused($id),
+            'tags' => $tags->read(),
         ]);
+    }
+
+    public function superAdminAction() {
+        $posts = new PostModel();
+        $comments = new CommentModel();
+        $users = new UserModel();
+        $id = (int)$_SESSION['id'];
+        return $this->render('super_admin.html.twig', [
+            'posts' => $posts->allPending(),
+            'comments' => $comments->allPending(),
+            'users' => $users->allPending(),
+        ]);
+    }
+
+    public function validate() {
+        $user = new UserModel();
+
+
+        return $this->render('super_admin.html.twig');
+    }
+
+    public function deleteAction()
+    {
+        $user = new UserModel();
+        $id = (int)$_GET['id'];
+        $user->delete($id);
+        header('Location: ?controller=user&action=superAdmin');
     }
 
     public function settingsAction() {
@@ -130,7 +166,12 @@ class UserController extends Controller {
                     // 'image' => $path,
                 ];
                 $m->update($user);
-                header('Location: ?controller=user&action=account');
+
+                $_SESSION['surname'] = $user['surname'];
+                $_SESSION['name'] = $user['name'];
+                $_SESSION['email'] = $user['email'];
+
+                return $this->render('admin.html.twig');
         }
     }
 

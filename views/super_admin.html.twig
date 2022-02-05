@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modérations{% endblock %}
+
+{% block content %}
+<!-- Pending user -->
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th colspan="4" class="text-center">Utilisateurs en attente de validation ({{ countp }})</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>
+            <div class="article-img-table">
+                <img src="{{ user.photo }}">
+            </div>
+        </td>
+        <td class="align-middle">{{ user.name }}</td>
+        <td class="align-middle">{{ user.surname }}</td>
+        <td class="align-middle">
+            <div class="col-lg-4 post-action mx-auto d-flex align-items-center">
+                <div><a href="?controller=user&action=validate&id={{ user.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
+                <div><a href="?controller=user&action=delete&id={{ user.id }}"><i class="fas fa-times mr-4 article-action"></i></div>
+            </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+<!-- Pending post -->
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th colspan="3" class="text-center">Articles en attente de validation ({{ countp }})</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td>
+            <div class="article-img-table">
+                <img src="{{ post.image }}">
+            </div>
+        </td>
+        <td class="align-middle">{{ post.title }}</td>
+        <td class="align-middle">
+            <div class="col-lg-4 post-action mx-auto d-flex align-items-center">
+                <div><a href="?controller=post&action=single&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                <div><a href="?controller=post&action=validate&id={{ post.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
+                <div><a href="?controller=post&action=deletePostAdmin&id={{ post.id }}"><i class="fas fa-times mr-4 article-action"></i></div>
+            </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+<!-- Pending comments -->
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th colspan="4" class="text-center">Commentaires en attente de validation ({{ countp }})</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for comment in comments %}
+      <tr>
+        <td class="w-15">
+            <div class="article-img-table">
+                <img src="{{ comment.image }}">
+            </div>
+        </td>
+        <td class="align-middle w-50">{{ comment.content }}</td>
+        <td class="align-middle w-15">{{ comment.date | date('d/m/Y à h:i') }}</td>
+        <td class="align-middle w-20">
+            <div class="col-lg-4 post-action mx-auto d-flex align-items-center justify-content-center">
+                <div><a href="?controller=post&action=single&id={{ comment.p_id }}#comment"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                <div><a href="?controller=comment&action=validate&id={{ comment.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
+                <div><a href="?controller=comment&action=deleteComment&id={{ comment.id }}"><i class="fas fa-times mr-4 article-action"></i></div>
+            </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

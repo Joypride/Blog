@@ -7,14 +7,35 @@ use Models\CommentModel;
 class CommentController extends Controller {
 
     public function default() {
-        return $this->indexAction();
+        return $this->render('super_admin.html.twig');
     }
 
-    public function indexAction() {
-        return $this->render('index.html.twig');
+    public function addAction() {
+        if(isset($_POST['category'])) {
+            $tag = new CommentModel();
+            $name = $_POST['category'];
+            
+            $tag->create($name);
+
+            header('Location: ?controller=user&action=adminPost');
+        }
     }
 
-    public function contactAction() {
-        return $this->render('contact.html.twig');
+    public function deleteCommentAction() {
+        $comment = new CommentModel();
+        $id = (int)$_GET['id'];
+        $comment->delete($id);
+        header('Location: ?controller=user&action=superAdmin');
+    }
+
+    public function newCommentAction() {
+        $comment = new CommentModel();
+    }
+
+    public function validateAction() {
+        $comment = new CommentModel();
+        $id = (int)$_GET['id'];
+        $comment->validate($id);
+        header('Location: ?controller=user&action=superAdmin');
     }
 }

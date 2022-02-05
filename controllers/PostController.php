@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Models\PostModel;
 use Models\CommentModel;
+use Models\CategoryModel;
 
 class PostController extends Controller {
     
@@ -24,17 +25,39 @@ class PostController extends Controller {
         $m = new PostModel();
         $c = new CommentModel();
         $id = (int)$_GET['id'];
+        $content = false;
+
+        if (isset($_POST['content'])) {
+            if(!empty($_POST['content']) && (isset($_SESSION['id'])))
+            {
+            $comment = [
+                'content' => $_POST['content'], 
+                'post' => $_POST['id'],
+                'user' => $_SESSION['id']
+            ];
+            $c->create($comment);
+            } else {
+            $comment = [
+                'content' => $_POST['content'], 
+                'post' => $_POST['id'],
+                'user' => NULL
+            ];
+            $c->create($comment);
+            }
+            $content = 'Votre commentaire a bien été soumis et sera publié dès sa validation par un modérateur';
+        }
         return $this->render('single_post.html.twig', [
             'single' => $m->find($id),
             'comments' => $c->read($id),
+            'content' => $content
         ]);
     }
 
     public function addAction()
     {
-        $m = new PostModel();
+        $category = new CategoryModel();
         return $this->render('add_post.html.twig', [
-            'category' => $m->category(),
+            'category' => $category->category(),
         ]);
     }
 
@@ -88,9 +111,10 @@ class PostController extends Controller {
 
     public function editAction()
     {
-        $m = new PostModel();
+        $post = new PostModel();
+        $tag = new CategoryModel();
         $id = (int)$_GET['id'];
-        return $this->render('edit_post.html.twig', ['post' => $m->find($id), 'category' => $m->category()]);
+        return $this->render('edit_post.html.twig', ['post' => $post->find($id), 'category' => $tag->category()]);
     }
 
     public function updateAction()
@@ -109,5 +133,35 @@ class PostController extends Controller {
         $id = (int)$_GET['id'];
         $m->delete($id);
         header('Location: ?controller=user&action=adminPost');
+    }
+
+    public function deletePostAdminAction()
+    {
+        $post = new PostModel();
+        $id = (int)$_GET['id'];
+        $post->delete($id);
+        header('Location: ?controller=user&action=superAdmin');
+    }
+
+    public function commentAction() {
+        $m = new CommentModel();
+
+        if(!empty($_POST['content']) && is_null($_POST['id_user']))
+        {
+            $comment = [
+                'content' => $_POST['content'], 
+                'post' => $_POST['id'],
+                'user' => $_POST['id_user']
+            ];
+            $m->create($comment);
+        } else {
+            $comment = [
+                'content' => $_POST['content'], 
+                'post' => $_POST['id'],
+                'user' => NULL
+            ];
+            $m->create($comment);
+        }
+        header('Location: ?controller=user&action=');
     }
 }

@@ -62,27 +62,54 @@
 </div>
 
 <!-- Comment section -->
-<div class="container mb-5 mt-5">
+<div id="comment" class="container mb-5 mt-5">
     <div class="card">
         <div class="row">
             <div class="col-md-12">
-                <h3 class="text-center mb-5">Commentaires</h3>
-				<div class="row mx-auto">
-					<div class="media col-12 d-flex justify-content-center">
-						<div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="https://i.imgur.com/RpzrMR2.jpg" width="40">
-							<textarea rows="4" cols="100" class="form-control ml-1 shadow-none textarea"></textarea>
+                <h3 class="text-center mb-4">Commentaires</h3>
+				<form method="POST">
+					<div class="row mx-auto">
+						<div class="media col-12 d-flex justify-content-center text-center">
+							{% if session is defined and session.id is defined %}
+							<div><img class="rounded-circle mb-2" src="{{ session.photo }}" width="40">
+							{% else %}
+							<div><img class="rounded-circle mb-2" src="./public/img/user.jpg" width="40">
+							{% endif %}
+							{% if session.id is not defined %}
+							<div class="form-group register-form d-flex mx-auto">
+								<input type="text" class="form-control register-form mr-2" id="name" placeholder="Nom" name="name" required>
+								<input type="text" class="form-control register-form" id="surname" placeholder="Prénom" name="surname" required>
+							</div>
+							{% endif %}
+							<div class="form-group">
+								<textarea rows="4" cols="100" name="content" class="form-control register-form mx-auto shadow-none textarea"></textarea>
+							</div>
+								<input type="hidden" name="id" value="{{ single.id }}">
+							</div>
 						</div>
+						<button type="submit" id="register-btn" class="btn btn-block btn-comment">Publier</button>
 					</div>
-				</div>
+				</form>
+				{% if content %}
+				<div class="alert alert-success mt-4" role="alert">{{ content }}</div>
+				{% endif %}
                 <div class="row">
                     <div class="col-md-12">
 						{% for comment in comments %}
+						{% if comment.id is not null %}
                         <div class="media mt-4"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="{{ comment.photo }}" />
+						{% else %}
+                        <div class="media mt-4"> <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="./public/img/user.jpg" />
+						{% endif %}
                             <div class="media-body">
                                 <div class="row">
                                     <div class="col-8 d-flex">
-                                        <h5>{{ comment.surname }} {{ comment.name }}</h5> <span>- {{ comment.date | date('d/m/Y à h:i') }}</span>
-                                    </div>
+										{% if comment.id is null %}
+                                        <h5>Anonyme</h5> <span>&nbsp;- {{ comment.date | date('d/m/Y à h:i') }}</span>
+                                        {% else %}
+										<h5>{{ comment.surname }} {{ comment.name }}</h5> <span>&nbsp;- {{ comment.date | date('d/m/Y à h:i') }}</span>
+										{% endif %}
+									</div>
                                 </div>{{ comment.content }} 
 							</div>
                         </div>

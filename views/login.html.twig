@@ -21,10 +21,10 @@
         <div class="col-lg-6">
             <form method="post">
                 <div class="form-group">
-                  <input type="email" class="form-control login-form" id="email" placeholder="Email" name="email">
+                  <input type="email" class="form-control login-form" id="email" placeholder="Email" name="email" required>
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control login-form" id="password" placeholder="Mot de passe" name="password">
+                  <input type="password" class="form-control login-form" id="password" placeholder="Mot de passe" name="password" required>
                   {{ errorMessage }}
                 </div>
                 <button type="submit" id="login-btn" class="btn deep-purple btn-block ">Connexion</button>  

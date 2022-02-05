@@ -12,7 +12,8 @@
         <div class="col-md-12">
           <form class="wrapp" method="post" role="form" action="?controller=post&action=insert" enctype="multipart/form-data">
             <div class="form-group">
-              <input type="text" class="form-control" name="title" required="required" value="{{ post.title }}" placeholder="Titre"/>
+              <label class="label-form">Titre</label>
+              <input type="text" class="form-control" name="title" required="required" value="{{ post.title }}"/>
             </div>
             <div class="row">
               <div class= "col-md-6">
@@ -32,10 +33,12 @@
               </div>
             </div>
             <div class="form-group">
-                <textarea class="form-control headline-text mb-4" name="headline" required="required" placeholder="Chapô">{{ post.headline }}</textarea>
+              <label class="label-form">Chapô</label>
+                <textarea class="form-control headline-text mb-4" name="headline" required="required">{{ post.headline }}</textarea>
               </div>
             <div class="form-group">
-              <textarea class="form-control" required="required" name="content" placeholder="Contenu">{{ post.content }}</textarea>
+              <label class="label-form">Contenu</label>
+              <textarea class="form-control" required="required" name="content">{{ post.content }}</textarea>
             </div>
             <div class="form-group">
                <input type="submit" value="Modifier" class="submit-form mt-4" />

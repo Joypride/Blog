@@ -12,6 +12,10 @@ body {
 	-webkit-font-smoothing : antialiased;
 }
 
+a {
+	color: #000;
+}
+
 a:hover {
 	text-decoration: none;
 	color: #000;
@@ -185,11 +189,8 @@ a:hover {
 .article-action {
 	background-color: #EDEDED;
     border-radius: 20px;
-    padding: 10px 10px;
-}
-
-.post-action a {
-	color: #000;
+    padding: 10px;
+	cursor: pointer;
 }
 
 .post-action span {
@@ -369,6 +370,11 @@ footer a {
     text-decoration: none
 }
 
+.btn-comment {
+	width: 20%!important;
+	margin: auto;
+}
+
 /* Account */
 
 span.round-tab {
@@ -495,8 +501,45 @@ textarea {
     display: block;
 }
 
+.label-form {
+	color: #F7897C
+}
+
 /* Contact */
 
 .message-contact {
 	height: 100px!important;
+}
+
+/* Tags - Categories */
+
+.all-tags {
+	border: 1px solid #EDEDED;
+    border-radius: 20px;
+    padding: 0 7px;
+	background-color: #EDEDED;
+}
+
+span.tag-input {
+	display: inline-block;
+	border-bottom: 1px solid darkgrey;
+	padding: 0.15em;
+}
+
+span.tag-input > input {
+	border: none;
+}
+
+span.tag-input > input:focus {
+	outline: none;
+}
+
+.btn-tag {
+	border: none;
+    background-color: inherit;
+	display: inline;
+}
+
+.btn-tag:active {
+	outline: none;
 }
