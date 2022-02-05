@@ -6,6 +6,8 @@ use Models\UserModel;
 use Models\PostModel;
 use Models\CommentModel;
 use Models\CategoryModel;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class UserController extends Controller {
     
@@ -175,8 +177,82 @@ class UserController extends Controller {
         }
     }
 
+    public function newPasswordAction() {
+        $user = new UserModel();
+        $id = $_SESSION['id'];
+        return $this->render('new_password.html.twig', ['info' => $user->find($id)]);
+    }
+
+    public function changePasswordAction() {
+        $user = new UserModel();
+        $id = $_SESSION['id'];
+
+        if(isset($_POST['old_pass']) && isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
+            $old = $_POST['old_pass'];
+            $pwd = $_POST['new_password'];
+            $new = $_POST['confirm_password'];
+            $email = $_SESSION['email'];
+            $actual = $user->pass($email);
+            $error = NULL;
+            $succes = NULL;
+
+            if (password_verify($old, $actual)) {
+                if ($pwd === $new) {
+                    $password = password_hash($pwd, PASSWORD_DEFAULT);
+                    $user->changePassword($password);
+                    $succes = 'Votre nouveau mot de passe a bien été enregistré';
+                } else {
+                    $error = 'Vos mots de passe ne correspondent pas';
+                }
+            } else {
+                $error = 'Votre ancien mot de passe ne correspond pas';
+            }
+            return $this->render('new_password.html.twig', ['error' => $error, 'success' => $succes]);
+        }
+    }
+
     public function logoutAction() {
         session_destroy();
         header('Location: /');
+    }
+
+    public function contactAction() {
+
+        if (isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']) && isset($_POST['message'])) {
+            $name = $_POST['name'];
+            $surname = $_POST['surname'];
+            $email = $_POST['email'];
+            $message = $_POST['message'];
+            $mail = new PHPMailer(TRUE);
+            $note = NULL;
+
+            try {
+            /* Set the mail sender. */
+            $mail->setFrom($email, $name . $surname);
+
+            /* Add a recipient. */
+            $mail->addAddress('joypride@hotmail.fr', 'Laurie');
+
+            /* Set the mail message body. */
+            $mail->Body = $message;
+
+            /* Finally send the mail. */
+            $mail->send();
+            }
+            catch (Exception $e)
+            {
+            /* PHPMailer exception. */
+            echo $e->errorMessage();
+            }
+            catch (\Exception $e)
+            {
+            /* PHP exception (note the backslash to select the global namespace Exception class). */
+            echo $e->getMessage();
+            }
+            $note = 'Votre message a bien été envoyé !';
+        } else {
+            $note = 'Veuillez remplir tous les champs';
+        }
+        return $this->render('contact.html.twig', ['note' => $note]);
     }
 }

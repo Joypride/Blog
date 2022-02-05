@@ -71,6 +71,14 @@ class UserModel extends Model {
         return $r->execute();
     }
 
+    public function changePassword($password) {
+        $r = self::getDatabaseInstance()->prepare("UPDATE user SET password = :password WHERE id = :id");
+        $r->bindValue(':password', $password);
+        $r->bindValue(':id', $_SESSION['id']);
+        return $r->execute();
+    }
+    
+
     /**
      * @return mixed
      */
