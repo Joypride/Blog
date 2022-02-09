@@ -36,7 +36,8 @@ class PostController extends Controller {
                 'user' => $_SESSION['id']
             ];
             $c->create($comment);
-            } else {
+            } else if (!empty($_POST['content']) && !empty($_POST['name']) && !empty($_POST['surname']))
+            {
             $comment = [
                 'content' => $_POST['content'], 
                 'post' => $_POST['id'],
@@ -48,8 +49,8 @@ class PostController extends Controller {
         }
         return $this->render('single_post.html.twig', [
             'single' => $m->find($id),
-            'comments' => $c->read($id),
-            'content' => $content
+            'comments' => $c->validated($id),
+            'content' => $content,
         ]);
     }
 
@@ -133,6 +134,13 @@ class PostController extends Controller {
         $id = (int)$_GET['id'];
         $m->delete($id);
         header('Location: ?controller=user&action=adminPost');
+    }
+
+    public function validatePostAction() {
+        $post = new PostModel();
+        $id = (int)$_GET['id'];
+        $post->validatePost($id);
+        header('Location: ?controller=user&action=superAdmin');
     }
 
     public function deletePostAdminAction()

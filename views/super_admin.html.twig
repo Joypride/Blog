@@ -22,7 +22,7 @@
         <td class="align-middle">{{ user.surname }}</td>
         <td class="align-middle">
             <div class="col-lg-4 post-action mx-auto d-flex align-items-center">
-                <div><a href="?controller=user&action=validate&id={{ user.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
+                <div><a href="?controller=user&action=validateUser&id={{ user.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
                 <div><a href="?controller=user&action=delete&id={{ user.id }}"><i class="fas fa-times mr-4 article-action"></i></div>
             </div>
         </td>
@@ -49,7 +49,7 @@
         <td class="align-middle">
             <div class="col-lg-4 post-action mx-auto d-flex align-items-center">
                 <div><a href="?controller=post&action=single&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
-                <div><a href="?controller=post&action=validate&id={{ post.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
+                <div><a href="?controller=post&action=validatePost&id={{ post.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
                 <div><a href="?controller=post&action=deletePostAdmin&id={{ post.id }}"><i class="fas fa-times mr-4 article-action"></i></div>
             </div>
         </td>

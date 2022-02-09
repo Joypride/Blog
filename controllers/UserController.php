@@ -107,11 +107,11 @@ class UserController extends Controller {
         ]);
     }
 
-    public function validate() {
+    public function validateUserAction() {
         $user = new UserModel();
-
-
-        return $this->render('super_admin.html.twig');
+        $id = (int)$_GET['id'];
+        $user->validateUser($id);
+        header('Location: ?controller=user&action=superAdmin');
     }
 
     public function deleteAction()

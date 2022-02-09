@@ -28,14 +28,14 @@ class CommentController extends Controller {
         header('Location: ?controller=user&action=superAdmin');
     }
 
-    public function newCommentAction() {
-        $comment = new CommentModel();
-    }
-
     public function validateAction() {
         $comment = new CommentModel();
         $id = (int)$_GET['id'];
         $comment->validate($id);
         header('Location: ?controller=user&action=superAdmin');
+    }
+
+    public function newCommentAction() {
+        
     }
 }

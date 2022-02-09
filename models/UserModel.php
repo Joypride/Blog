@@ -77,6 +77,14 @@ class UserModel extends Model {
         $r->bindValue(':id', $_SESSION['id']);
         return $r->execute();
     }
+
+    public function validateUser($id)
+    {
+        $r = self::getDatabaseInstance()->prepare("UPDATE user SET activated = 1 WHERE id = :id");
+        $r->bindValue(':id', $id);
+        return $r->execute();
+    }
+    
     
 
     /**

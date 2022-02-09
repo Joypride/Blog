@@ -64,7 +64,7 @@ class PostModel extends Model {
 
     public function find($id)
     {
-        $q = self::getDatabaseInstance()->prepare("SELECT p.*, u.id, u.surname, u.name, u.photo, c.id, c.title as c_title FROM post p LEFT JOIN user u ON p.user_id = u.id LEFT JOIN category c ON p.category_id = c.id WHERE p.id = :id");
+        $q = self::getDatabaseInstance()->prepare("SELECT p.*, p.id as post_id, u.id, u.surname, u.name, u.photo, c.id, c.title as c_title FROM post p LEFT JOIN user u ON p.user_id = u.id LEFT JOIN category c ON p.category_id = c.id WHERE p.id = :id");
         $q->bindValue(':id', $id, \PDO::PARAM_INT);
         $q->execute();
         return $q->fetch();
@@ -76,6 +76,13 @@ class PostModel extends Model {
         $r->bindValue(':title', $title);
         $r->bindValue(':content', $content);
         $r->bindValue(':headline', $headline);
+        $r->bindValue(':id', $id);
+        return $r->execute();
+    }
+
+    public function validatePost($id)
+    {
+        $r = self::getDatabaseInstance()->prepare("UPDATE post SET status = 1 WHERE id = :id");
         $r->bindValue(':id', $id);
         return $r->execute();
     }

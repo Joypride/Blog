@@ -30,6 +30,11 @@ class CommentModel extends Model {
         return $r->execute();
     }
 
+    public function validated($id)
+    {
+        return self::getDatabaseInstance()->query("SELECT c.*, u.id, u.name, u.surname, u.photo FROM comment c LEFT JOIN user u ON c.user_id = u.id LEFT JOIN post p ON c.post_id = p.id WHERE p.id = ".$id." AND c.status = 'validated' ORDER BY date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+    }
+
     public function delete($id)
     {
         $r = self::getDatabaseInstance()->prepare("DELETE FROM comment WHERE id =".$id.";");
