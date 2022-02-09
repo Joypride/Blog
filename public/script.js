@@ -59,8 +59,6 @@
     // Check password
 
 let check = function() {
-  console.log(document.getElementById('new_password').value);
-  console.log(document.getElementById('confirm_password').value);
   if (document.getElementById('new_password').value ==
       document.getElementById('confirm_password').value) {
       document.getElementById('message').style.color = 'green';

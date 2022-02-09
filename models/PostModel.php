@@ -17,7 +17,9 @@ class PostModel extends Model {
 
     public function pending($id)
     {
-        return self::getDatabaseInstance()->query("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 0 AND u.id = ".$id." ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+        $r = self::getDatabaseInstance()->prepare("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 0 AND u.id = :id ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+        $r->bindValue(':id', $id);
+        return $r->execute();
     }
 
     public function allPending()
@@ -27,28 +29,37 @@ class PostModel extends Model {
 
     public function countPending($id)
     {
-        return self::getDatabaseInstance()->query("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 0 AND u.id = ".$id."")->fetchColumn();
+        $r = self::getDatabaseInstance()->prepare("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 0 AND u.id = :id")->fetchColumn();
+        $r->bindValue(':id', $id);
+        return $r->execute();
     }
 
     public function validated($id)
     {
-        return self::getDatabaseInstance()->query("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 1 AND u.id = ".$id." ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+        $r = self::getDatabaseInstance()->prepare("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 1 AND u.id = :id ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+        $r->bindValue(':id', $id);
+        return $r->execute();
     }
 
     public function countValidated($id)
     {
-        return self::getDatabaseInstance()->query("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 1 AND u.id = ".$id."")->fetchColumn();
+        $r = self::getDatabaseInstance()->prepare("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 1 AND u.id = :id")->fetchColumn();
+        $r->bindValue(':id', $id);
+        return $r->execute();
     }
 
     public function refused($id)
     {
-        return self::getDatabaseInstance()->query("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = -1 AND u.id = ".$id." ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+        $r = self::getDatabaseInstance()->prepare("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = -1 AND u.id = :id ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+        $r->bindValue(':id', $id);
+        return $r->execute();
     }
 
     public function countRefused($id)
     {
-        return self::getDatabaseInstance()->query("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = -1 AND u.id = ".$id."")->fetchColumn();
-    }
+        $r = self::getDatabaseInstance()->prepare("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = -1 AND u.id = :id")->fetchColumn();
+        $r->bindValue(':id', $id);
+        return $r->execute();}
 
     public function create(array $post)
     {
@@ -89,7 +100,8 @@ class PostModel extends Model {
 
     public function delete($id)
     {
-        $r = self::getDatabaseInstance()->prepare("DELETE FROM post WHERE id =".$id.";");
+        $r = self::getDatabaseInstance()->prepare("DELETE FROM post WHERE id = :id");
+        $r->bindValue(':id', $id);
         return $r->execute();
     }
 

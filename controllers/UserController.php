@@ -110,6 +110,21 @@ class UserController extends Controller {
         $user = new UserModel();
         $id = (int)$_GET['id'];
         $user->validateUser($id);
+        
+        try {
+            $mail->setFrom($email, $name . $surname);
+            $mail->addAddress('joypride@hotmail.fr', 'Laurie');
+            $mail->Body = $message;
+            $mail->send();
+        }
+        catch (Exception $e)
+        {
+            echo $e->errorMessage();
+        }
+        catch (\Exception $e)
+        {
+            echo $e->getMessage();
+        }
         header('Location: ?controller=user&action=superAdmin');
     }
 

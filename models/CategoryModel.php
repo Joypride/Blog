@@ -23,7 +23,8 @@ class CategoryModel extends Model {
 
     public function delete($id)
     {
-        $r = self::getDatabaseInstance()->prepare("DELETE FROM category WHERE id =".$id.";");
+        $r = self::getDatabaseInstance()->prepare("DELETE FROM category WHERE id = :id");
+        $r->bindValue(':id', $id);
         return $r->execute();
     }
 }
