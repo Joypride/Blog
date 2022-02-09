@@ -26,7 +26,6 @@ class UserController extends Controller {
             $name = $_POST['name']; 
             $surname = $_POST['surname'];
             $email = $_POST['email'];
-            // $password = $_POST['password'];
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $data = [
             "connexion" => $m->register($name, $surname, $email, $password)
@@ -129,32 +128,6 @@ class UserController extends Controller {
     }
 
     public function editInfoAction() {
-
-        // $dossier = 'public/img/';
-        // $fichier = basename($_FILES['image']['name']);
-        // $taille_maxi = 50000000;
-        // $taille = filesize($_FILES['image']['tmp_name']);
-        // $extensions = array('.png', '.gif', '.jpg', '.jpeg');
-        // $extension = strrchr($_FILES['image']['name'], '.');
-
-        // if(!in_array($extension, $extensions)) { //Si l'extension n'est pas dans le tableau
-        //     $erreur = 'Seuls les fichiers de type png, gif, jpg ou jpeg sont acceptés';
-        // }
-        // if($taille>$taille_maxi) {
-        //     $erreur = 'Le fichier est trop volumineux';
-        // }
-        // if(!isset($erreur)) { //S'il n'y a pas d'erreur, on upload
-        //     //Formatage du nom du fichier
-        //     $fichier = strtr($fichier,
-        //         'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
-        //         'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
-        //     $fichier = preg_replace('/([^.a-z0-9]+)/i', '-', $fichier);
-        //     move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $fichier);
-        //     $path = './public/img/' . $fichier;
-        // }
-        // else {
-        //     echo $erreur;
-        // }
         
         if (isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']))
         {
@@ -165,7 +138,6 @@ class UserController extends Controller {
                     'surname' => $_POST['surname'],
                     'email' => $_POST['email'],
                     'id' => $_SESSION['id'],
-                    // 'image' => $path,
                 ];
                 $m->update($user);
 

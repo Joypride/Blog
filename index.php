@@ -4,14 +4,6 @@ session_start();
 
 require 'vendor/autoload.php';
 
-/*use Models\Model;
-use Controllers\UserController;
-use Controllers\HomeController;
-
-$o = new HomeController();
-
-var_dump($o);*/
-
 $controller_default = "Home"; // Nom du contrôleur par défaut
 
     if (isset($_GET['controller'])) {
@@ -36,4 +28,3 @@ $controller_default = "Home"; // Nom du contrôleur par défaut
     else {
         exit ("Error 404: not found !");
     }
- 
