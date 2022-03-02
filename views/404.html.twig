@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<!-- hero section -->
+<div class="container mb-5" id="hero">
+    <div class="row justify-content-end">
+        <div class="col-lg-6 hero-img-container">
+            <div class="hero-img">
+                <img src="./public/img/roses.jpg">
+            </div>
+        </div>	  		
+
+        <div class="col-lg-9">
+            <div class="hero-title">
+                <h1>Oups ! Erreur 404</h1>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+            <p>La page que vous recherchez semble introuvable.<br>Peut-être que votre bonheur se trouve dans les pages suivantes:</p>
+            <div class="col-lg-6 col-md-12 pl-0">
+                <ul class="pl-0">
+                  <li class="nav-item">
+                    <a class="nav-link pl-0" href="?controller=home&action=index">Accueil</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active pl-0" href="?controller=post&action=blog">Blog</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link pl-0" href="?controller=home&action=contact">Contact</a>
+                  </li>			  
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- hero ends -->
+{% endblock %}

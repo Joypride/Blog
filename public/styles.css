@@ -21,6 +21,10 @@ a:hover {
 	color: #000;
 }
 
+ul {
+	list-style-type: none;
+}
+
 .navbar-light .navbar-nav .nav-link ,
 .nav-item a {
 	font-weight: bold;
@@ -542,4 +546,18 @@ span.tag-input > input:focus {
 
 .btn-tag:active {
 	outline: none;
+}
+
+/* Modal */
+
+.modal {
+	display: none;
+}
+
+.show {
+	display: block;
+}
+
+.hidden {
+	display: none;
 }

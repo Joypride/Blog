@@ -23,7 +23,17 @@
         <td class="align-middle">
             <div class="col-lg-4 post-action mx-auto d-flex align-items-center">
                 <div><a href="?controller=user&action=validateUser&id={{ user.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
-                <div><a href="?controller=user&action=delete&id={{ user.id }}"><i class="fas fa-times mr-4 article-action"></i></div>
+                <div id="btnOpenModalDelete"><i class="fas fa-times mr-4 article-action"></i></div>
+                <!-- <a href="?controller=user&action=delete&id={{ user.id }}"> -->
+                  <div>
+                    <div id="modalDelete" class="modal">
+                      Supprimer définitivement ?
+                      <div class="buttons">
+                        <button id="btnDeleteItem"><a href="?controller=user&action=delete&id={{ user.id }}">Oui</a></button>
+                        <button id="btnCloseModalDelete">Non</button>
+                      </div>
+                    </div>
+                  </div>
             </div>
         </td>
       </tr>

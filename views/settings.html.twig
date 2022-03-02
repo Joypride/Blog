@@ -18,7 +18,7 @@
         </div>
 
         <div class="col-lg-6">
-            <form method="POST" action="?controller=user&action=editInfo">
+            <form method="POST" action="?controller=user&action=editInfo" enctype="multipart/form-data">
 
 
                 <!-- Upload image -->
@@ -26,10 +26,10 @@
                     <div class="offset-md-3">
                         <label class="cabinet center-block">
                             <figure class="rounded-circle">
-                                <img src="./public/img/profil.jpg" class="gambar img-fluid rounded-circle" id="item-img-output" />
+                                <img src="{{ info.photo }}" class="gambar img-fluid rounded-circle" id="item-img-output" />
                                 <figcaption><i class="fa fa-camera"></i></figcaption>
                             </figure>
-                            <input type="file" class="item-img file center-block" value="{{ info.photo }}" name="image" />
+                            <input type="file" class="item-img file center-block" name="image" />
                         </label>
                     </div>
                 </div>

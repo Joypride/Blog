@@ -17,9 +17,7 @@ class PostModel extends Model {
 
     public function pending($id)
     {
-        $r = self::getDatabaseInstance()->prepare("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 0 AND u.id = :id ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        return self::getDatabaseInstance()->query("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 0 AND u.id = ".$id." ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
     }
 
     public function allPending()
@@ -29,80 +27,67 @@ class PostModel extends Model {
 
     public function countPending($id)
     {
-        $r = self::getDatabaseInstance()->prepare("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 0 AND u.id = :id")->fetchColumn();
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        return self::getDatabaseInstance()->query("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 0 AND u.id = ".$id."")->fetchColumn();
     }
 
     public function validated($id)
     {
-        $r = self::getDatabaseInstance()->prepare("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 1 AND u.id = :id ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        return self::getDatabaseInstance()->query("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 1 AND u.id = ".$id." ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
     }
 
     public function countValidated($id)
     {
-        $r = self::getDatabaseInstance()->prepare("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 1 AND u.id = :id")->fetchColumn();
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        return self::getDatabaseInstance()->query("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 1 AND u.id = ".$id."")->fetchColumn();
     }
 
     public function refused($id)
     {
-        $r = self::getDatabaseInstance()->prepare("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = -1 AND u.id = :id ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        return self::getDatabaseInstance()->query("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = -1 AND u.id = ".$id." ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
     }
 
     public function countRefused($id)
     {
-        $r = self::getDatabaseInstance()->prepare("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = -1 AND u.id = :id")->fetchColumn();
-        $r->bindValue(':id', $id);
-        return $r->execute();}
+        return self::getDatabaseInstance()->query("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = -1 AND u.id = ".$id."")->fetchColumn();
+    }
 
     public function create(array $post)
     {
-        $r = self::getDatabaseInstance()->prepare("INSERT INTO post SET title = :title, headline = :headline, image = :image, content = :content, user_id = :user, category_id = :category, creation_date = NOW()");
-        $r->bindValue(':title', $post['title']);
-        $r->bindValue(':headline', $post['headline']);
-        $r->bindValue(':content', $post['content']);
-        $r->bindValue(':image', $post['image']);
-        $r->bindValue(':user', $post['user']);
-        $r->bindValue(':category', $post['category']);
-        $r->execute();
+        $request = self::getDatabaseInstance()->prepare("INSERT INTO post SET title = :title, headline = :headline, image = :image, content = :content, user_id = :user, category_id = :category, creation_date = NOW()");
+        $request->bindValue(':title', $post['title']);
+        $request->bindValue(':headline', $post['headline']);
+        $request->bindValue(':content', $post['content']);
+        $request->bindValue(':image', $post['image']);
+        $request->bindValue(':user', $post['user']);
+        $request->bindValue(':category', $post['category']);
+        $request->execute();
     }
 
     public function find($id)
     {
-        $q = self::getDatabaseInstance()->prepare("SELECT p.*, p.id as post_id, u.id, u.surname, u.name, u.photo, c.id, c.title as c_title FROM post p LEFT JOIN user u ON p.user_id = u.id LEFT JOIN category c ON p.category_id = c.id WHERE p.id = :id");
-        $q->bindValue(':id', $id, \PDO::PARAM_INT);
-        $q->execute();
-        return $q->fetch();
+        $request = self::getDatabaseInstance()->prepare("SELECT p.*, p.id as post_id, u.id, u.surname, u.name, u.photo, c.id, c.title as c_title FROM post p LEFT JOIN user u ON p.user_id = u.id LEFT JOIN category c ON p.category_id = c.id WHERE p.id = :id");
+        $request->bindValue(':id', $id, \PDO::PARAM_INT);
+        $request->execute();
+        return $request->fetch();
     }
 
     public function edit($post)
     {
-        $r = self::getDatabaseInstance()->prepare("UPDATE post SET title = :title, headline = :headline, image = :image, content = :content, update_date = NOW() WHERE id = :id");
-        $r->bindValue(':title', $title);
-        $r->bindValue(':content', $content);
-        $r->bindValue(':headline', $headline);
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        $request = self::getDatabaseInstance()->prepare("UPDATE post SET title = :title, headline = :headline, image = :image, content = :content, update_date = NOW() WHERE id = :id");
+        $request->bindValue(':title', $title);
+        $request->bindValue(':content', $content);
+        $request->bindValue(':headline', $headline);
+        $request->bindValue(':id', $id);
+        return $request->execute();
     }
 
     public function validatePost($id)
     {
-        $r = self::getDatabaseInstance()->prepare("UPDATE post SET status = 1 WHERE id = :id");
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        return self::getDatabaseInstance()->query("UPDATE post SET status = 1 WHERE id = ".$id."");
     }
 
     public function delete($id)
     {
-        $r = self::getDatabaseInstance()->prepare("DELETE FROM post WHERE id = :id");
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        return self::getDatabaseInstance()->query("DELETE FROM post WHERE id = ".$id."");
     }
 
     /**

@@ -15,4 +15,8 @@ class HomeController extends Controller {
     public function contactAction() {
         return $this->render('contact.html.twig');
     }
+
+    public function error404Action() {
+        return $this->render('404.html.twig');
+    }
 }

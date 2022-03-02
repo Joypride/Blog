@@ -9,55 +9,55 @@ class UserModel extends Model {
 
     public function emailExist($email)
     {
-        $r = self::getDatabaseInstance()->prepare("SELECT * FROM user WHERE email = :email");
-        $r->bindValue('email', $email);
-        $r->execute();
-        return $r->fetch();
+        $request = self::getDatabaseInstance()->prepare("SELECT * FROM user WHERE email = :email");
+        $request->bindValue('email', $email);
+        $request->execute();
+        return $request->fetch();
     }
 
     public function pass($email)
     {
-        $r = self::getDatabaseInstance()->prepare("SELECT password FROM user WHERE email = :email");
-        $r->bindValue('email', $email);
-        $r->execute();
-        return $r->fetchColumn();
+        $request = self::getDatabaseInstance()->prepare("SELECT password FROM user WHERE email = :email");
+        $request->bindValue('email', $email);
+        $request->execute();
+        return $request->fetchColumn();
     }
 
     public function login($email, $password)
     {
-        $r = self::getDatabaseInstance()->prepare('SELECT id, surname, name, email, photo, activated, isAdmin FROM user WHERE email = :email AND password = :password');
-        $r->bindValue('email', $email);
-        $r->bindValue('password', $password);
-        $r->execute();
-        return $r->fetch(\PDO::FETCH_ASSOC);
+        $request = self::getDatabaseInstance()->prepare('SELECT id, surname, name, email, photo, activated, isAdmin FROM user WHERE email = :email AND password = :password');
+        $request->bindValue('email', $email);
+        $request->bindValue('password', $password);
+        $request->execute();
+        return $request->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function register($name, $surname, $email, $password)
     {
-        $r = self::getDatabaseInstance()->prepare('INSERT INTO user (name, surname, email, password) VALUES (:name, :surname, :email, :password)');
-        $r->bindValue('name', $name);
-        $r->bindValue('surname', $surname);
-        $r->bindValue('email', $email);
-        $r->bindValue('password', $password);
-        $r->execute();
+        $request = self::getDatabaseInstance()->prepare('INSERT INTO user (name, surname, email, password) VALUES (:name, :surname, :email, :password)');
+        $request->bindValue('name', $name);
+        $request->bindValue('surname', $surname);
+        $request->bindValue('email', $email);
+        $request->bindValue('password', $password);
+        $request->execute();
     }
 
     public function find($id)
     {
-        $q = self::getDatabaseInstance()->prepare("SELECT * FROM user WHERE id = :id");
-        $q->bindValue(':id', $id, \PDO::PARAM_INT);
-        $q->execute();
-        return $q->fetch();
+        $request = self::getDatabaseInstance()->prepare("SELECT * FROM user WHERE id = :id");
+        $request->bindValue(':id', $id, \PDO::PARAM_INT);
+        $request->execute();
+        return $request->fetch();
     }
 
     public function update($user)
     {
-        $r = self::getDatabaseInstance()->prepare("UPDATE user SET name = :name, surname = :surname, email = :email WHERE id = :id");
-        $r->bindValue(':name', $user['name']);
-        $r->bindValue(':email', $user['email']);
-        $r->bindValue(':surname', $user['surname']);
-        $r->bindValue(':id', $_SESSION['id']);
-        return $r->execute();
+        $request = self::getDatabaseInstance()->prepare("UPDATE user SET name = :name, surname = :surname, email = :email WHERE id = :id");
+        $request->bindValue(':name', $user['name']);
+        $request->bindValue(':email', $user['email']);
+        $request->bindValue(':surname', $user['surname']);
+        $request->bindValue(':id', $_SESSION['id']);
+        return $request->execute();
     }
 
     public function allPending()
@@ -67,23 +67,23 @@ class UserModel extends Model {
 
     public function delete($id)
     {
-        $r = self::getDatabaseInstance()->prepare("DELETE FROM user WHERE id = :id");
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        $request = self::getDatabaseInstance()->prepare("DELETE FROM user WHERE id = :id");
+        $request->bindValue(':id', $id);
+        return $request->execute();
     }
 
     public function changePassword($password) {
-        $r = self::getDatabaseInstance()->prepare("UPDATE user SET password = :password WHERE id = :id");
-        $r->bindValue(':password', $password);
-        $r->bindValue(':id', $_SESSION['id']);
-        return $r->execute();
+        $request = self::getDatabaseInstance()->prepare("UPDATE user SET password = :password WHERE id = :id");
+        $request->bindValue(':password', $password);
+        $request->bindValue(':id', $_SESSION['id']);
+        return $request->execute();
     }
 
     public function validateUser($id)
     {
-        $r = self::getDatabaseInstance()->prepare("UPDATE user SET activated = 1 WHERE id = :id");
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        $request = self::getDatabaseInstance()->prepare("UPDATE user SET activated = 1 WHERE id = :id");
+        $request->bindValue(':id', $id);
+        return $request->execute();
     }
     
     

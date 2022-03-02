@@ -16,15 +16,15 @@ class CategoryModel extends Model {
 
     public function create($name)
     {
-        $r = self::getDatabaseInstance()->prepare("INSERT INTO category SET title = :name");
-        $r->bindValue(':name', $name);
-        $r->execute();
+        $request = self::getDatabaseInstance()->prepare("INSERT INTO category SET title = :name");
+        $request->bindValue(':name', $name);
+        $request->execute();
     }
 
     public function delete($id)
     {
-        $r = self::getDatabaseInstance()->prepare("DELETE FROM category WHERE id = :id");
-        $r->bindValue(':id', $id);
-        return $r->execute();
+        $request = self::getDatabaseInstance()->prepare("DELETE FROM category WHERE id = :id");
+        $request->bindValue(':id', $id);
+        return $request->execute();
     }
 }
