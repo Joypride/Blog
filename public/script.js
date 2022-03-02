@@ -68,31 +68,3 @@ let check = function() {
       document.getElementById('message').innerHTML = 'Mots de passe différents';
   }
 }
-
-    // Modal for suppression 
-
-// Buttons
-const btnOpenModalDelete = document.getElementById("btnOpenModalDelete");
-const btnCloseModalDelete = document.getElementById("btnCloseModalDelete");
-const btnDeleteItem = document.getElementById("btnDeleteItem");
-// Modals
-const modalDelete = document.getElementById("modalDelete");
-// Functions
-const openModal = () => {
-	console.log("Opening modal....");
-	modalDelete.classList.add("show");
-	modalDelete.classList.remove("hidden");
-}
-const closeModal = () => {
-	console.log("Closing modal....");
-	modalDelete.classList.add("hidden");
-	modalDelete.classList.remove("show");
-}
-const deleteItem = () => {
-	console.log("Delete the item...");
-	closeModal();
-}
-
-btnOpenModalDelete.addEventListener("click", openModal);
-btnCloseModalDelete.addEventListener("click", closeModal);
-btnDeleteItem.addEventListener("click", deleteItem);
