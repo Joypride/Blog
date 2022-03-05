@@ -27,21 +27,21 @@ class PostController extends Controller {
         $id = (int)$_GET['id'];
         $content = false;
 
-        if (isset($_POST['content'])) {
-            if(!empty($_POST['content']) && (isset($_SESSION['id'])))
+        if (Tools::getValue('content')) {
+            if(!empty(Tools::getValue('content')) && (isset($_SESSION['id'])))
             {
             $comment = [
-                'content' => $_POST['content'], 
+                'content' => Tools::getValue('content'), 
                 'post' => $_POST['id'],
                 'user' => $_SESSION['id']
             ];
             $c->create($comment);
-            } else if (!empty($_POST['content']) && !empty($_POST['name']) && !empty($_POST['surname']))
+            } else if (!empty(Tools::getValue('content')) && !empty(Tools::getValue('name')) && !empty(Tools::getValue('surname')))
             {
-            $name = $_POST['name'];
-            $surname = $_POST['surname'];
+            $name = Tools::getValue('name');
+            $surname = Tools::getValue('surname');
             $comment = [
-                'content' => $_POST['content'], 
+                'content' => Tools::getValue('content'), 
                 'post' => $_POST['id'],
                 'user' => NULL
             ];
@@ -94,13 +94,13 @@ class PostController extends Controller {
                 echo $erreur;
             }
 
-            if(!empty($_POST['title']) && !empty($_POST['category']) && !empty($_POST['headline']) && !empty($_POST['content'])) {
+            if(!empty(Tools::getValue('title')) && !empty(Tools::getValue('category')) && !empty(Tools::getValue('headline')) && !empty(Tools::getValue('content'))) {
                 $m = new PostModel();
                 $post = [
-                    'title' => $_POST['title'], 
-                    'category' => $_POST['category'],
-                    'headline' => $_POST['headline'],
-                    'content' => $_POST['content'],
+                    'title' => Tools::getValue('title'), 
+                    'category' => Tools::getValue('category'),
+                    'headline' => Tools::getValue('headline'),
+                    'content' => Tools::getValue('content'),
                     'user' => $_POST['id'],
                     'image' => $path,
                 ];
@@ -150,15 +150,15 @@ class PostController extends Controller {
                     echo $erreur;
                 }
                 
-                if (!empty($_POST['title']) && !empty($_POST['category']) && !empty($_POST['headline']) && !empty($_POST['content']))
+                if (!empty(Tools::getValue('title')) && !empty(Tools::getValue('category')) && !empty(Tools::getValue('headline')) && !empty(Tools::getValue('content')))
                 {            
                     $model = new PostModel();
                     $tags = new CategoryModel();
                         $post = [
-                            'title' => $_POST['title'], 
-                            'category' => $_POST['category'],
-                            'headline' => $_POST['headline'],
-                            'content' => $_POST['content'],
+                            'title' => Tools::getValue('title'), 
+                            'category' => Tools::getValue('category'),
+                            'headline' => Tools::getValue('headline'),
+                            'content' => Tools::getValue('content'),
                             'id' => $_POST['id'],
                             'image' => $path
                         ];

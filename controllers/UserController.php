@@ -23,11 +23,11 @@ class UserController extends Controller {
     public function dataRegistrationAction() {
         $model = new UserModel();
 
-        if(isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']) && isset($_POST['password'])) {
-            $name = $_POST['name']; 
-            $surname = $_POST['surname'];
-            $email = $_POST['email'];
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        if(Tools::getValue('name') && Tools::getValue('surname') && Tools::getValue('email') && Tools::getValue('password')) {
+            $name = Tools::getValue('name'); 
+            $surname = Tools::getValue('surname');
+            $email = Tools::getValue('email');
+            $password = password_hash(Tools::getValue('password'), PASSWORD_DEFAULT);
             $mail = new PHPMailer(TRUE);
             $data = [
             "connexion" => $model->register($name, $surname, $email, $password)
@@ -65,10 +65,10 @@ class UserController extends Controller {
         $model = new UserModel();
         $errorMessage = NULL;
 
-        if(isset($_POST['email']) && isset($_POST['password'])) {
+        if(Tools::getValue('email') && Tools::getValue('password')) {
             $email = Tools::getValue('email');
             $pass = $model->pass($email);
-            $password = password_verify($_POST['password'], $pass);
+            $password = password_verify(Tools::getValue('password'), $pass);
 
             if ($password) {
                 $connexion = $model->login($email, $pass);
@@ -206,13 +206,13 @@ class UserController extends Controller {
                 echo $erreur;
             }
             
-            if (isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']))
+            if (Tools::getValue('name') && Tools::getValue('surname') && Tools::getValue('email'))
             {            
                 $m = new UserModel();
                     $user = [
-                        'name' => $_POST['name'], 
-                        'surname' => $_POST['surname'],
-                        'email' => $_POST['email'],
+                        'name' => Tools::getValue('name'), 
+                        'surname' => Tools::getValue('surname'),
+                        'email' => Tools::getValue('email'),
                         'id' => $_SESSION['id'],
                         'image' => $path
                     ];
@@ -238,10 +238,10 @@ class UserController extends Controller {
         $user = new UserModel();
         $id = $_SESSION['id'];
 
-        if(isset($_POST['old_pass']) && isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
-            $old = $_POST['old_pass'];
-            $pwd = $_POST['new_password'];
-            $new = $_POST['confirm_password'];
+        if(Tools::getValue('old_pass') && Tools::getValue('new_password') && Tools::getValue('confirm_password')) {
+            $old = Tools::getValue('old_pass');
+            $pwd = Tools::getValue('new_password');
+            $new = Tools::getValue('confirm_password');
             $email = $_SESSION['email'];
             $actual = $user->pass($email);
             $error = NULL;
@@ -269,11 +269,11 @@ class UserController extends Controller {
 
     public function contactAction() {
 
-        if (isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']) && isset($_POST['message'])) {
-            $name = $_POST['name'];
-            $surname = $_POST['surname'];
-            $email = $_POST['email'];
-            $message = $_POST['message'];
+        if (Tools::getValue('name') && Tools::getValue('surname') && Tools::getValue('email') && Tools::getValue('message')) {
+            $name = Tools::getValue('name');
+            $surname = Tools::getValue('surname');
+            $email = Tools::getValue('email');
+            $message = Tools::getValue('message');
             $mail = new PHPMailer(TRUE);
             $note = NULL;
 

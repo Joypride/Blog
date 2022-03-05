@@ -11,9 +11,9 @@ class CategoryController extends Controller {
     }
 
     public function addAction() {
-        if(isset($_POST['category'])) {
+        if(Tools::getValue('category')) {
             $tag = new CategoryModel();
-            $name = $_POST['category'];
+            $name = Tools::getValue('category');
             
             $tag->create($name);
 
