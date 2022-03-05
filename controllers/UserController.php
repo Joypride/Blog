@@ -83,11 +83,11 @@ class UserController extends Controller {
                     $_SESSION['admin'] = $connexion['isAdmin'];
     
                     return $this->render('admin.html.twig', [
-                        'surname' => $_SESSION['surname'],
-                        'name' => $_SESSION['name'],
-                        'email' => $_SESSION['email'],
-                        'photo' => $_SESSION['photo'],
-                        'admin' => $_SESSION['admin'],
+                        'surname' => Tools::getSession('surname'),
+                        'name' => Tools::getSession('name'),
+                        'email' =>Tools::getSession('email'),
+                        'photo' => Tools::getSession('photo'),
+                        'admin' => Tools::getSession('admin'),
                     ]);
                     } else {
                         $errorMessage = 'Votre profil n\'est pas encore activé';
@@ -137,7 +137,7 @@ class UserController extends Controller {
 
     public function validateUserAction() {
         $user = new UserModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $user->validateUser($id);
         $info = $user->find($id);
         $mail = new PHPMailer(TRUE);
@@ -165,14 +165,14 @@ class UserController extends Controller {
     public function deleteAction()
     {
         $user = new UserModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $user->delete($id);
         header('Location: ?controller=user&action=superAdmin');
     }
 
     public function settingsAction() {
         $model = new UserModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         return $this->render('settings.html.twig', ['info' => $model->find($id)]);
     }
 
@@ -242,7 +242,7 @@ class UserController extends Controller {
             $old = Tools::getValue('old_pass');
             $pwd = Tools::getValue('new_password');
             $new = Tools::getValue('confirm_password');
-            $email = $_SESSION['email'];
+            $email =Tools::getSession('email');
             $actual = $user->pass($email);
             $error = NULL;
             $succes = NULL;
