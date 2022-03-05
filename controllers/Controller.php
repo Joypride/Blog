@@ -11,8 +11,8 @@ abstract class Controller
 
     public function __construct() {
         // On teste si un paramètre action existe et s'il correspond à une action du contrôleur
-        if(isset($_GET['action'])) {
-            $this->action = $_GET['action'];; // On appelle cette action
+        if(isset(Tools::getValue('action'))) {
+            $this->action = Tools::getValue('action');; // On appelle cette action
         }
     }
 

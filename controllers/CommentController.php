@@ -23,14 +23,14 @@ class CommentController extends Controller {
 
     public function deleteCommentAction() {
         $comment = new CommentModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $comment->delete($id);
         header('Location: ?controller=user&action=superAdmin');
     }
 
     public function validateAction() {
         $comment = new CommentModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $comment->validate($id);
         header('Location: ?controller=user&action=superAdmin');
     }

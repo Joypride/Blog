@@ -24,7 +24,7 @@ class CategoryController extends Controller {
     public function deleteAction()
     {
         $tag = new CategoryModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $tag->delete($id);
         header('Location: ?controller=user&action=adminPost');
     }

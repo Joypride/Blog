@@ -24,7 +24,7 @@ class PostController extends Controller {
     public function singleAction() {
         $m = new PostModel();
         $c = new CommentModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $content = false;
 
         if (Tools::getValue('content')) {
@@ -116,7 +116,7 @@ class PostController extends Controller {
     {
         $post = new PostModel();
         $tag = new CategoryModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         return $this->render('edit_post.html.twig', ['post' => $post->find($id), 'category' => $tag->category()]);
     }
 
@@ -180,14 +180,14 @@ class PostController extends Controller {
     public function deleteAction()
     {
         $model = new PostModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $model->delete($id);
         header('Location: ?controller=user&action=adminPost');
     }
 
     public function validatePostAction() {
         $post = new PostModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $post->validatePost($id);
         header('Location: ?controller=user&action=superAdmin');
     }
@@ -195,7 +195,7 @@ class PostController extends Controller {
     public function deletePostAdminAction()
     {
         $post = new PostModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $post->delete($id);
         header('Location: ?controller=user&action=superAdmin');
     }

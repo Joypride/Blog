@@ -137,7 +137,7 @@ class UserController extends Controller {
 
     public function validateUserAction() {
         $user = new UserModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $user->validateUser($id);
         $info = $user->find($id);
         $mail = new PHPMailer(TRUE);
@@ -165,14 +165,14 @@ class UserController extends Controller {
     public function deleteAction()
     {
         $user = new UserModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         $user->delete($id);
         header('Location: ?controller=user&action=superAdmin');
     }
 
     public function settingsAction() {
         $model = new UserModel();
-        $id = (int)$_GET['id'];
+        $id = (int)Tools::getValue('id');
         return $this->render('settings.html.twig', ['info' => $model->find($id)]);
     }
 
