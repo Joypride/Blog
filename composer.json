@@ -5,11 +5,14 @@
     "autoload" : {
         "psr-4": {
             "Controllers\\": "controllers/",
-            "Models\\" : "models/"
-        }
+            "Models\\" : "models/",
+            "Utils\\": "utils/"
+        },
+    "bin": ["bin/blog"]
     },
     "require": {
         "twig/twig": "^3.3",
-        "phpmailer/phpmailer": "^6.5"
+        "phpmailer/phpmailer": "^6.5",
+        "squizlabs/php_codesniffer": "2.*"
     }
 }

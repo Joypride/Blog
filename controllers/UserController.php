@@ -8,6 +8,7 @@ use Models\CommentModel;
 use Models\CategoryModel;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Utils\Tools;
 
 class UserController extends Controller {
     
@@ -20,32 +21,57 @@ class UserController extends Controller {
     }
 
     public function dataRegistrationAction() {
-        $m = new UserModel();
+        $model = new UserModel();
 
         if(isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['email']) && isset($_POST['password'])) {
             $name = $_POST['name']; 
             $surname = $_POST['surname'];
             $email = $_POST['email'];
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $mail = new PHPMailer(TRUE);
             $data = [
-            "connexion" => $m->register($name, $surname, $email, $password)
+            "connexion" => $model->register($name, $surname, $email, $password)
             ];
+
+            try {
+                /* Set the mail sender. */
+                $mail->setFrom($email, $name . $surname);
+    
+                /* Add a recipient. */
+                $mail->addAddress('joypride@hotmail.fr', 'Laurie');
+    
+                /* Set the mail message body. */
+                $mail->Body = 'Nouvelle inscription nécessitant une action de votre part.';
+    
+                /* Finally send the mail. */
+                $mail->send();
+            }
+            catch (Exception $e)
+            {
+                /* PHPMailer exception. */
+                echo $e->errorMessage();
+            }
+            catch (\Exception $e)
+            {
+                /* PHP exception (note the backslash to select the global namespace Exception class). */
+                echo $e->getMessage();
+            }
         }
         return $this->render('register_process.html.twig', $data);
     }
 
     public function loginAction() {
 
-        $m = new UserModel();
+        $model = new UserModel();
         $errorMessage = NULL;
 
         if(isset($_POST['email']) && isset($_POST['password'])) {
-            $email = $_POST['email'];
-            $pass = $m->pass($email);
+            $email = Tools::getValue('email');
+            $pass = $model->pass($email);
             $password = password_verify($_POST['password'], $pass);
 
             if ($password) {
-                $connexion = $m->login($email, $pass);
+                $connexion = $model->login($email, $pass);
 
                 if($connexion) {
                     if($connexion['activated'] == 1) {
@@ -101,8 +127,11 @@ class UserController extends Controller {
         $id = (int)$_SESSION['id'];
         return $this->render('super_admin.html.twig', [
             'posts' => $posts->allPending(),
+            'countp' => $posts->countAllPending(),
             'comments' => $comments->allPending(),
+            'countc' => $comments->countAllPending(),
             'users' => $users->allPending(),
+            'countu' => $users->countAllPending(),
         ]);
     }
 
@@ -110,11 +139,15 @@ class UserController extends Controller {
         $user = new UserModel();
         $id = (int)$_GET['id'];
         $user->validateUser($id);
+        $info = $user->find($id);
+        $mail = new PHPMailer(TRUE);
         
         try {
-            $mail->setFrom($email, $name . $surname);
-            $mail->addAddress('joypride@hotmail.fr', 'Laurie');
-            $mail->Body = $message;
+            /* Set the mail sender. */
+            $mail->setFrom('joypride@hotmail.fr', 'Laurie');
+            /* Add a recipient. */
+            $mail->addAddress($info['email'], $info['name'] . $info['surname']);
+            $mail->Body = 'Bonne nouvelle ! Votre inscription a été validée, vous pouvez maintenant vous connecter sur votre espace.';
             $mail->send();
         }
         catch (Exception $e)
@@ -125,6 +158,7 @@ class UserController extends Controller {
         {
             echo $e->getMessage();
         }
+        
         header('Location: ?controller=user&action=superAdmin');
     }
 
@@ -137,9 +171,9 @@ class UserController extends Controller {
     }
 
     public function settingsAction() {
-        $m = new UserModel();
+        $model = new UserModel();
         $id = (int)$_GET['id'];
-        return $this->render('settings.html.twig', ['info' => $m->find($id)]);
+        return $this->render('settings.html.twig', ['info' => $model->find($id)]);
     }
 
     public function editInfoAction() {
@@ -187,6 +221,7 @@ class UserController extends Controller {
                     $_SESSION['surname'] = $user['surname'];
                     $_SESSION['name'] = $user['name'];
                     $_SESSION['email'] = $user['email'];
+                    $_SESSION['image'] = $user['image'];
 
                     return $this->render('admin.html.twig');
             }

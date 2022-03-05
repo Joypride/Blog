@@ -25,6 +25,11 @@ class CommentModel extends Model {
         return self::getDatabaseInstance()->query("SELECT c.*, p.id as p_id, p.image FROM comment c LEFT JOIN post p ON c.post_id = p.id WHERE c.status = 'pending' ORDER BY date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
     }
 
+    public function countAllPending()
+    {
+        return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM comment WHERE status = 'pending'")->fetchColumn();
+    }
+
     public function validate($id)
     {
         $request = self::getDatabaseInstance()->prepare("UPDATE comment SET status = 'validated' WHERE id = :id");

@@ -30,6 +30,11 @@ class PostModel extends Model {
         return self::getDatabaseInstance()->query("SELECT COUNT(*), p.user_id, u.id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 0 AND u.id = ".$id."")->fetchColumn();
     }
 
+    public function countAllPending()
+    {
+        return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM post WHERE status = 0")->fetchColumn();
+    }
+
     public function validated($id)
     {
         return self::getDatabaseInstance()->query("SELECT p.*, u.id as u_id FROM post p LEFT JOIN user u ON p.user_id = u.id WHERE status = 1 AND u.id = ".$id." ORDER BY creation_date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
@@ -73,10 +78,11 @@ class PostModel extends Model {
     public function edit($post)
     {
         $request = self::getDatabaseInstance()->prepare("UPDATE post SET title = :title, headline = :headline, image = :image, content = :content, update_date = NOW() WHERE id = :id");
-        $request->bindValue(':title', $title);
-        $request->bindValue(':content', $content);
-        $request->bindValue(':headline', $headline);
-        $request->bindValue(':id', $id);
+        $request->bindValue(':title', $post['title']);
+        $request->bindValue(':content', $post['content']);
+        $request->bindValue(':headline', $post['headline']);
+        $request->bindValue(':image', $post['image']);
+        $request->bindValue(':id', $post['id']);
         return $request->execute();
     }
 

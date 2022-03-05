@@ -1,5 +1,8 @@
 <?php
 namespace App;
+
+use Utils\Tools;
+
 session_start();
 
 require 'vendor/autoload.php';
@@ -26,5 +29,7 @@ $controller_default = "Home"; // Nom du contrôleur par défaut
         echo $controller->run();
     }
     else {
-        exit ("Error 404: not found !");
+        header('Location: ?controller=home&action=error404');
+        exit;
+        // exit ("Error 404: not found !");
     }

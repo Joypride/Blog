@@ -38,6 +38,8 @@ class PostController extends Controller {
             $c->create($comment);
             } else if (!empty($_POST['content']) && !empty($_POST['name']) && !empty($_POST['surname']))
             {
+            $name = $_POST['name'];
+            $surname = $_POST['surname'];
             $comment = [
                 'content' => $_POST['content'], 
                 'post' => $_POST['id'],
@@ -120,19 +122,66 @@ class PostController extends Controller {
 
     public function updateAction()
     {
-        $m = new PostModel();
-        if (!empty($_POST['title']) && !empty($_POST['category']) && !empty($_POST['headline']) && !empty($_POST['content']))
-        {
-            //
-        }
-        return $this->render('edit_post.html.twig');
+        if (!empty($_FILES)) {
+
+            $dossier = 'public/img/';
+            $fichier = basename($_FILES['image']['name']);
+            $taille_maxi = 50000000;
+            $taille = filesize($_FILES['image']['tmp_name']);
+            $extensions = array('.png', '.gif', '.jpg', '.jpeg');
+            $extension = strrchr($_FILES['image']['name'], '.');
+    
+                if(!in_array($extension, $extensions)) { //Si l'extension n'est pas dans le tableau
+                    $erreur = 'Seuls les fichiers de type png, gif, jpg ou jpeg sont acceptés';
+                }
+                if($taille>$taille_maxi) {
+                    $erreur = 'Le fichier est trop volumineux';
+                }
+                if(!isset($erreur)) { //S'il n'y a pas d'erreur, on upload
+                    //Formatage du nom du fichier
+                    $fichier = strtr($fichier,
+                        'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
+                        'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+                    $fichier = preg_replace('/([^.a-z0-9]+)/i', '-', $fichier);
+                    move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $fichier);
+                    $path = './public/img/' . $fichier;
+                }
+                else {
+                    echo $erreur;
+                }
+                
+                if (!empty($_POST['title']) && !empty($_POST['category']) && !empty($_POST['headline']) && !empty($_POST['content']))
+                {            
+                    $model = new PostModel();
+                    $tags = new CategoryModel();
+                        $post = [
+                            'title' => $_POST['title'], 
+                            'category' => $_POST['category'],
+                            'headline' => $_POST['headline'],
+                            'content' => $_POST['content'],
+                            'id' => $_POST['id'],
+                            'image' => $path
+                        ];
+                        $model->edit($post);
+    
+                        return $this->render('admin_post.html.twig', [
+                            'pending' => $model->pending($_SESSION['id']),
+                            'validated' => $model->validated($_SESSION['id']),
+                            'refused' => $model->refused($_SESSION['id']),
+                            'countp' => $model->countPending($_SESSION['id']),
+                            'countv' => $model->countValidated($_SESSION['id']),
+                            'countr' => $model->countRefused($_SESSION['id']),
+                            'tags' => $tags->read(),
+                        ]);
+                }
+            }
     }
 
     public function deleteAction()
     {
-        $m = new PostModel();
+        $model = new PostModel();
         $id = (int)$_GET['id'];
-        $m->delete($id);
+        $model->delete($id);
         header('Location: ?controller=user&action=adminPost');
     }
 
@@ -149,27 +198,5 @@ class PostController extends Controller {
         $id = (int)$_GET['id'];
         $post->delete($id);
         header('Location: ?controller=user&action=superAdmin');
-    }
-
-    public function commentAction() {
-        $m = new CommentModel();
-
-        if(!empty($_POST['content']) && is_null($_POST['id_user']))
-        {
-            $comment = [
-                'content' => $_POST['content'], 
-                'post' => $_POST['id'],
-                'user' => $_POST['id_user']
-            ];
-            $m->create($comment);
-        } else {
-            $comment = [
-                'content' => $_POST['content'], 
-                'post' => $_POST['id'],
-                'user' => NULL
-            ];
-            $m->create($comment);
-        }
-        header('Location: ?controller=user&action=');
     }
 }

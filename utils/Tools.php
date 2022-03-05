@@ -1,16 +1,8 @@
 <?php
+
+namespace Utils;
+
 	abstract class Tools {
-		
-		static public function Tronquer_Texte($texte, $longeur_max)
-		{
-			if (strlen($texte) > $longeur_max) 
-			{ 
-			$texte = substr($texte, 0, $longeur_max); 
-			$dernier_espace = strrpos($texte, " "); 
-			$texte = substr($texte, 0, $dernier_espace)."..."; 
-			} 
-			return $texte;
-		}
 		
 		static public function getValue($key, $defaultValue = false)
 		{
@@ -79,30 +71,6 @@
 			if($mail->Send()) return true; else return false;
 		}
         return false;
-	}
-		
-		static public function nettoieTxt($string) {
-			$string = trim($string);
-			$string = preg_replace("/\x92/", "'",$string);
-			$string = preg_replace("/\x93/", '"',$string);
-			$string = preg_replace("/\x94/", '"',$string);
-			//$string = preg_replace("/style=\"[^\"]+\"/", "",$string);
-			$string = str_replace('“', '"', $string);
-			$string = str_replace('”', '"', $string);
-			$string = str_replace('’', '"', $string);
-			$string = str_replace('
-', '', $string);
-		//	$string = str_replace('&nbsp;', ' ', $string);
-			$string = preg_replace('#[[:space:]]{2,}#i', ' ', $string);
-			$string = preg_replace('#<p[^>]+>#', '<p>', $string);
-			if(strpos(substr($string, 0,14), '&nbsp;'))
-			$string = substr($string, 14);
-			return trim($string);
-		}
-
-	
-	public static function getFileExtension($fic){
-		return strtolower(substr($fic, strrpos($fic, '.')+1));
 	}
 	
 	public static function getPOST($prefix="form_") {

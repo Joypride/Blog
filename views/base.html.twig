@@ -35,11 +35,11 @@
 	{% block header %}
 	<nav class="navbar navbar-expand-md navbar-light">
 		<div class="container">
-		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemon01" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  </button>
 		  <a class="navbar-brand" href="?controller=home&action=index"><img src="./public/img/logo.png"></a>
-				<div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
+				<div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo01">
 					<ul class="menu menu-list navbar-nav position-absolute" id="menu-list">
 						<li class="nav-item">
 							<a class="nav-link" href="?controller=home&action=index">Accueil</a>
@@ -85,26 +85,9 @@
 <footer class="container-fluid mt-1 p-4">
 	<div class="container ">
 		<div class="row pb-1"> 
-		<!-- Footer logo -->
-		<div class="col-lg-3 col-md-12"><img src="./public/img/logo.png"></div>
-
-		<!-- footer links -->
-		<div class="col-lg-6 col-md-12">
-			<ul class="nav justify-content-center">
-			  <li class="nav-item">
-			    <a class="nav-link active" href="?controller=post&action=blog">Blog</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="?controller=home&action=contact">Contact</a>
-			  </li>			  
-			  <li class="nav-item">
-			    <a class="nav-link" href="?controller=user&action=login">Connexion</a>
-			  </li>
-			</ul>
-		</div>
 
 		<!-- footer social links -->
-		<div class="col-lg-3 col-md-12">
+		<div class="col-lg-5 col-md-12">
 			<ul class="nav justify-content-end">
 			  <li class="nav-item">
 			    <a class="nav-link active btn btn-light" href="https://www.facebook.com/laurie.ferry"><i class="fab fa-facebook-f"></i></a>
@@ -119,8 +102,30 @@
 				<a class="nav-link active btn btn-light" href="https://www.instagram.com/j0ypride/?hl=fr"><i class="fab fa-instagram"></i></a>
 			  </li>
 			</ul>
-
 		</div>
+
+		<!-- footer links -->
+		<div class="col-lg-6 col-md-12">
+			<ul class="nav justify-content-center">
+			  <li class="nav-item">
+			    <a class="nav-link active" href="?controller=post&action=blog">Blog</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" href="?controller=home&action=contact">Contact</a>
+			  </li>			
+			  {% if session is defined and session.id is defined %}  
+			  <li class="nav-item">
+			    <a class="nav-link" href="?controller=user&action=logout">Déconnexion</a>
+			  </li>
+			  {% else %}
+			  <li class="nav-item">
+			    <a class="nav-link" href="?controller=user&action=login">Connexion</a>
+			  </li>
+			  {% endif %}
+			</ul>
+		</div>
+
+		
 
 		<hr>
 		</div>

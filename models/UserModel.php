@@ -52,10 +52,11 @@ class UserModel extends Model {
 
     public function update($user)
     {
-        $request = self::getDatabaseInstance()->prepare("UPDATE user SET name = :name, surname = :surname, email = :email WHERE id = :id");
+        $request = self::getDatabaseInstance()->prepare("UPDATE user SET name = :name, surname = :surname, email = :email, photo = :photo WHERE id = :id");
         $request->bindValue(':name', $user['name']);
         $request->bindValue(':email', $user['email']);
         $request->bindValue(':surname', $user['surname']);
+        $request->bindValue(':photo', $user['image']);
         $request->bindValue(':id', $_SESSION['id']);
         return $request->execute();
     }
@@ -63,6 +64,11 @@ class UserModel extends Model {
     public function allPending()
     {
         return self::getDatabaseInstance()->query("SELECT * FROM user WHERE activated = 0")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
+    }
+
+    public function countAllPending()
+    {
+        return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM user WHERE activated = 0")->fetchColumn();
     }
 
     public function delete($id)

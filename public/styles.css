@@ -308,6 +308,31 @@ footer a {
 		#hero {
 		text-align: center !important;
 	}
+
+	.social-list {
+		justify-content: center!important;
+	}
+
+	.form-control, .register-form, .btn-block {
+		margin: auto;
+	}
+
+	.media-mb {
+		margin-bottom: 1em;
+	}
+
+	.author-name {
+		text-align: left;
+	}
+
+	.nav-info {
+		justify-content: center!important;
+		flex-wrap: wrap;
+	}
+
+	.media-ma {
+		margin: auto;
+	}
 }
 
 @media(max-width: 585px){
@@ -323,6 +348,11 @@ footer a {
 	.hero-title h1 {
 	font-size: 40px;
 	line-height: 50px;
+	}
+	.menu-list {
+		z-index: 1;
+		background-color: #fff;
+		padding: 10px 15px;
 	}
 }
 
