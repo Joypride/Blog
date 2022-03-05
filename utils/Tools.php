@@ -8,7 +8,7 @@ namespace Utils;
 		{
 			if (!isset($key) OR empty($key) OR !is_string($key))
 				return false;
-			$ret = (isset($_POST[$key]) ? $_POST[$key] : (isset($_GET[$key]) ? $_GET[$key] : (isset($_SESSION[$key]) ? $_SESSION[$key] : $defaultValue)));
+			$ret = (isset($_POST[$key]) ? $_POST[$key] : (isset($_GET[$key]) ? $_GET[$key] : $defaultValue));
 	
 			if (is_string($ret) === true)
 				$ret = urldecode(preg_replace('/((\%5C0+)|(\%00+))/i', '', urlencode($ret)));
@@ -22,6 +22,17 @@ namespace Utils;
 			$string = strip_tags($string);
 			$string = str_replace(array("\r\n", "\r", "\n"), '<br>', $string);
 			return $string;
+		}
+
+		static public function getSession($key, $defaultValue = false)
+		{
+			if (!isset($key) OR empty($key) OR !is_string($key))
+				return false;
+			$ret = (isset($_SESSION[$key]) ? $_SESSION[$key] : $defaultValue);
+	
+			if (is_string($ret) === true)
+				$ret = urldecode(preg_replace('/((\%5C0+)|(\%00+))/i', '', urlencode($ret)));
+			return !is_string($ret)? $ret : stripslashes($ret);
 		}
 	
 		static public function getIsset($key)

@@ -108,7 +108,7 @@ class UserController extends Controller {
     public function adminPostAction() {
         $posts = new PostModel();
         $tags = new CategoryModel();
-        $id = (int)$_SESSION['id'];
+        $id = (int)Tools::getSession('id');
         return $this->render('admin_post.html.twig', [
             'pending' => $posts->pending($id),
             'validated' => $posts->validated($id),
@@ -124,7 +124,7 @@ class UserController extends Controller {
         $posts = new PostModel();
         $comments = new CommentModel();
         $users = new UserModel();
-        $id = (int)$_SESSION['id'];
+        $id = (int)Tools::getSession('id');
         return $this->render('super_admin.html.twig', [
             'posts' => $posts->allPending(),
             'countp' => $posts->countAllPending(),
@@ -137,7 +137,7 @@ class UserController extends Controller {
 
     public function validateUserAction() {
         $user = new UserModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         $user->validateUser($id);
         $info = $user->find($id);
         $mail = new PHPMailer(TRUE);
@@ -165,14 +165,14 @@ class UserController extends Controller {
     public function deleteAction()
     {
         $user = new UserModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         $user->delete($id);
         header('Location: ?controller=user&action=superAdmin');
     }
 
     public function settingsAction() {
         $model = new UserModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         return $this->render('settings.html.twig', ['info' => $model->find($id)]);
     }
 
@@ -213,7 +213,7 @@ class UserController extends Controller {
                         'name' => Tools::getValue('name'), 
                         'surname' => Tools::getValue('surname'),
                         'email' => Tools::getValue('email'),
-                        'id' => $_SESSION['id'],
+                        'id' => Tools::getSession('id'),
                         'image' => $path
                     ];
                     $m->update($user);
@@ -230,13 +230,13 @@ class UserController extends Controller {
 
     public function newPasswordAction() {
         $user = new UserModel();
-        $id = $_SESSION['id'];
+        $id = Tools::getSession('id');
         return $this->render('new_password.html.twig', ['info' => $user->find($id)]);
     }
 
     public function changePasswordAction() {
         $user = new UserModel();
-        $id = $_SESSION['id'];
+        $id = Tools::getSession('id');
 
         if(Tools::getValue('old_pass') && Tools::getValue('new_password') && Tools::getValue('confirm_password')) {
             $old = Tools::getValue('old_pass');

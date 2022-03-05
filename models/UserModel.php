@@ -1,6 +1,7 @@
 <?php
 
 namespace Models;
+use Utils\Tools;
 
 class UserModel extends Model {
 
@@ -57,7 +58,7 @@ class UserModel extends Model {
         $request->bindValue(':email', $user['email']);
         $request->bindValue(':surname', $user['surname']);
         $request->bindValue(':photo', $user['image']);
-        $request->bindValue(':id', $_SESSION['id']);
+        $request->bindValue(':id', Tools::getSession('id'));
         return $request->execute();
     }
 
@@ -81,7 +82,7 @@ class UserModel extends Model {
     public function changePassword($password) {
         $request = self::getDatabaseInstance()->prepare("UPDATE user SET password = :password WHERE id = :id");
         $request->bindValue(':password', $password);
-        $request->bindValue(':id', $_SESSION['id']);
+        $request->bindValue(':id', Tools::getSession('id'));
         return $request->execute();
     }
 

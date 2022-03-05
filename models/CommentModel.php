@@ -1,6 +1,7 @@
 <?php
 
 namespace Models;
+use Utils\Tools;
 
 class CommentModel extends Model {
 

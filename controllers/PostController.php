@@ -5,6 +5,7 @@ namespace Controllers;
 use Models\PostModel;
 use Models\CommentModel;
 use Models\CategoryModel;
+use Utils\Tools;
 
 class PostController extends Controller {
     
@@ -24,16 +25,16 @@ class PostController extends Controller {
     public function singleAction() {
         $m = new PostModel();
         $c = new CommentModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         $content = false;
 
         if (Tools::getValue('content')) {
-            if(!empty(Tools::getValue('content')) && (isset($_SESSION['id'])))
+            if(!empty(Tools::getValue('content')) && (Tools::getSession('id')))
             {
             $comment = [
                 'content' => Tools::getValue('content'), 
                 'post' => $_POST['id'],
-                'user' => $_SESSION['id']
+                'user' => Tools::getSession('id')
             ];
             $c->create($comment);
             } else if (!empty(Tools::getValue('content')) && !empty(Tools::getValue('name')) && !empty(Tools::getValue('surname')))
@@ -116,7 +117,7 @@ class PostController extends Controller {
     {
         $post = new PostModel();
         $tag = new CategoryModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         return $this->render('edit_post.html.twig', ['post' => $post->find($id), 'category' => $tag->category()]);
     }
 
@@ -165,12 +166,12 @@ class PostController extends Controller {
                         $model->edit($post);
     
                         return $this->render('admin_post.html.twig', [
-                            'pending' => $model->pending($_SESSION['id']),
-                            'validated' => $model->validated($_SESSION['id']),
-                            'refused' => $model->refused($_SESSION['id']),
-                            'countp' => $model->countPending($_SESSION['id']),
-                            'countv' => $model->countValidated($_SESSION['id']),
-                            'countr' => $model->countRefused($_SESSION['id']),
+                            'pending' => $model->pending(Tools::getSession('id')),
+                            'validated' => $model->validated(Tools::getSession('id')),
+                            'refused' => $model->refused(Tools::getSession('id')),
+                            'countp' => $model->countPending(Tools::getSession('id')),
+                            'countv' => $model->countValidated(Tools::getSession('id')),
+                            'countr' => $model->countRefused(Tools::getSession('id')),
                             'tags' => $tags->read(),
                         ]);
                 }
@@ -180,14 +181,14 @@ class PostController extends Controller {
     public function deleteAction()
     {
         $model = new PostModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         $model->delete($id);
         header('Location: ?controller=user&action=adminPost');
     }
 
     public function validatePostAction() {
         $post = new PostModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         $post->validatePost($id);
         header('Location: ?controller=user&action=superAdmin');
     }
@@ -195,7 +196,7 @@ class PostController extends Controller {
     public function deletePostAdminAction()
     {
         $post = new PostModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         $post->delete($id);
         header('Location: ?controller=user&action=superAdmin');
     }

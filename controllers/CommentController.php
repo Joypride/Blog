@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\CommentModel;
+use Utils\Tools;
 
 class CommentController extends Controller {
 
@@ -23,14 +24,14 @@ class CommentController extends Controller {
 
     public function deleteCommentAction() {
         $comment = new CommentModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         $comment->delete($id);
         header('Location: ?controller=user&action=superAdmin');
     }
 
     public function validateAction() {
         $comment = new CommentModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         $comment->validate($id);
         header('Location: ?controller=user&action=superAdmin');
     }

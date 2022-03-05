@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\CategoryModel;
+use Utils\Tools;
 
 class CategoryController extends Controller {
 
@@ -24,7 +25,7 @@ class CategoryController extends Controller {
     public function deleteAction()
     {
         $tag = new CategoryModel();
-        $id = (int)Tools::getValue('id');
+        $id = (int)$_GET['id'];
         $tag->delete($id);
         header('Location: ?controller=user&action=adminPost');
     }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Controllers;
+use Utils\Tools;
 
 abstract class Controller
 {
@@ -11,7 +12,7 @@ abstract class Controller
 
     public function __construct() {
         // On teste si un paramètre action existe et s'il correspond à une action du contrôleur
-        if(isset(Tools::getValue('action'))) {
+        if(Tools::getValue('action')) {
             $this->action = Tools::getValue('action');; // On appelle cette action
         }
     }
