@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '2661fce7c595a93e285bf239ca90ffaafe9957e2',
+        'reference' => '9539dc96b3333f74e8462293b77efc4b94660286',
         'name' => 'oc/blog',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '2661fce7c595a93e285bf239ca90ffaafe9957e2',
+            'reference' => '9539dc96b3333f74e8462293b77efc4b94660286',
             'dev_requirement' => false,
         ),
         'phpmailer/phpmailer' => array(

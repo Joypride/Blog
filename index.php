@@ -30,6 +30,4 @@ $controller_default = "Home"; // Nom du contrôleur par défaut
     }
     else {
         header('Location: ?controller=home&action=error404');
-        exit;
-        // exit ("Error 404: not found !");
     }

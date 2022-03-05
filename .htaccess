@@ -1,0 +1,5 @@
+Options +FollowSymlinks
+Rewrite Engine on
+
+# Accueil
+RewriteRule ^?controller=home&action=login$ /connexion [L]

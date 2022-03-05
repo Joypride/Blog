@@ -39,6 +39,5 @@ abstract class Controller
             'erreur' => $message
         ];
         $this->render('error', $data);
-        die(); // Pour terminer le script vu qu'il y a une erreur
     }
 }

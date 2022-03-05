@@ -7,8 +7,7 @@
             "Controllers\\": "controllers/",
             "Models\\" : "models/",
             "Utils\\": "utils/"
-        },
-    "bin": ["bin/blog"]
+        }
     },
     "require": {
         "twig/twig": "^3.3",
