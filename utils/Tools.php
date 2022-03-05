@@ -34,6 +34,17 @@ namespace Utils;
 				$ret = urldecode(preg_replace('/((\%5C0+)|(\%00+))/i', '', urlencode($ret)));
 			return !is_string($ret)? $ret : stripslashes($ret);
 		}
+
+		static public function getFiles($key, $defaultValue = false)
+		{
+			if (!isset($key) || empty($key) || !is_string($key))
+				return false;
+			$ret = (isset(Tools::getFiles[$key]) ? Tools::getFiles[$key] : $defaultValue);
+	
+			if (is_string($ret) === true)
+				$ret = urldecode(preg_replace('/((\%5C0+)|(\%00+))/i', '', urlencode($ret)));
+			return !is_string($ret)? $ret : stripslashes($ret);
+		}
 	
 		static public function getIsset($key)
 		{

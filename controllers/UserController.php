@@ -178,14 +178,14 @@ class UserController extends Controller {
 
     public function editInfoAction() {
         
-        if (!empty($_FILES)) {
+        if (!empty(Tools::getFiles)) {
 
         $dossier = 'public/img/';
-        $fichier = basename($_FILES['image']['name']);
+        $fichier = basename(Tools::getFiles['image']['name']);
         $taille_maxi = 50000000;
-        $taille = filesize($_FILES['image']['tmp_name']);
+        $taille = filesize(Tools::getFiles['image']['tmp_name']);
         $extensions = array('.png', '.gif', '.jpg', '.jpeg');
-        $extension = strrchr($_FILES['image']['name'], '.');
+        $extension = strrchr(Tools::getFiles['image']['name'], '.');
 
             if(!in_array($extension, $extensions)) { //Si l'extension n'est pas dans le tableau
                 $erreur = 'Seuls les fichiers de type png, gif, jpg ou jpeg sont acceptés';
@@ -199,7 +199,7 @@ class UserController extends Controller {
                     'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
                     'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
                 $fichier = preg_replace('/([^.a-z0-9]+)/i', '-', $fichier);
-                move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $fichier);
+                move_uploaded_file(Tools::getFiles['image']['tmp_name'], $dossier . $fichier);
                 $path = './public/img/' . $fichier;
             }
             else {
