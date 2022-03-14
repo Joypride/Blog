@@ -16,7 +16,16 @@ class HomeController extends Controller {
         return $this->render('contact.html.twig');
     }
 
+    public function registerAction() {
+        return $this->render('register.html.twig');
+    }
+
     public function error404Action() {
         return $this->render('404.html.twig');
+    }
+
+    public function logoutAction() {
+        session_destroy();
+        header('Location: /');
     }
 }

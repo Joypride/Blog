@@ -48,7 +48,7 @@
 							<a class="nav-link" href="/post/blog">Blog</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/user/contact">Contact</a>
+							<a class="nav-link" href="/home/contact">Contact</a>
 						</li>
 						{% if session is defined and session.id is defined %}
 						<li class="nav-item">
@@ -67,7 +67,7 @@
 										<a class="nav-link" href="/user/adminPost">Mes articles</a>
 									</li>
 									<li class="nav-item dropdown-item">
-										<a class="nav-link" href="/user/logout">Déconnexion</a>
+										<a class="nav-link" href="/home/logout">Déconnexion</a>
 									</li>                  
 								</ul>
 							</div>
@@ -111,11 +111,11 @@
 			    <a class="nav-link active" href="/post/blog">Blog</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" href="/user/contact">Contact</a>
+			    <a class="nav-link" href="/home/contact">Contact</a>
 			  </li>			
 			  {% if session is defined and session.id is defined %}  
 			  <li class="nav-item">
-			    <a class="nav-link" href="/user/logout">Déconnexion</a>
+			    <a class="nav-link" href="/home/logout">Déconnexion</a>
 			  </li>
 			  {% else %}
 			  <li class="nav-item">

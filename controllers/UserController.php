@@ -16,10 +16,6 @@ class UserController extends Controller {
         return $this->render('index.html.twig');
     }
 
-    public function registerAction() {
-        return $this->render('register.html.twig');
-    }
-
     public function dataRegistrationAction() {
         $model = new UserModel();
 
@@ -236,11 +232,6 @@ class UserController extends Controller {
             }
             return $this->render('new_password.html.twig', ['error' => $error, 'success' => $succes]);
         }
-    }
-
-    public function logoutAction() {
-        session_destroy();
-        header('Location: /');
     }
 
     public function contactAction() {
