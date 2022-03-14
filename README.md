@@ -1,37 +1,29 @@
 # Blog
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
-
-## Pour commencer
-
-Entrez ici les instructions pour bien débuter avec votre projet...
+[![SymfonyInsight](https://insight.symfony.com/projects/36172c16-2a0e-44c2-a230-968ae0247675/small.svg)](https://insight.symfony.com/projects/36172c16-2a0e-44c2-a230-968ae0247675)
 
 ### Pré-requis
 
-Ce qu'il est requis pour commencer avec votre projet...
-
-    -   Programme
-    -   Programme
-    -   etc...
+    -   PHP 7.*
+    -   MySQL
+    -   Apache
 
 ### Installation
 
-Les étapes pour installer votre programme....
+- Clonez le Repositary.
 
-Dites ce qu'il faut faire...
+- Créez une base de données sur votre SGBD et importez le fichier blog.sql
 
-_exemple_: Executez la commande ``telnet mapscii.me`` pour commencer ensuite [...]
-
-Ensuite vous pouvez montrer ce que vous obtenez au final...
-
-## Démarrage
-
-Dites comment faire pour lancer votre projet
+- Configurez la connexion à la base de donnée dans le fichier ``Model.php``
 
 ## Fabriqué avec
 
-Entrez les programmes/logiciels/ressources que vous avez utilisé pour développer votre projet
-
-_exemples :_
-* [Materialize.css](http://materializecss.com) -    Framework CSS (front-end)
-* [Atom](https://atom.io/) -    Editeur de textes
+Ce site a été réalisé avec:
+- PHP 7.4
+- Twig 3
+- HTML5 
+- CSS3
+- Bootstrap 
+- PHPMailer 6
+- Javascript
