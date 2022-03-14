@@ -34,23 +34,41 @@ namespace Utils;
 				$ret = urldecode(preg_replace('/((\%5C0+)|(\%00+))/i', '', urlencode($ret)));
 			return !is_string($ret)? $ret : stripslashes($ret);
 		}
-
-		static public function getFiles($key, $defaultValue = false)
-		{
-			if (!isset($key) || empty($key) || !is_string($key))
-				return false;
-			$ret = (isset(Tools::getFiles[$key]) ? Tools::getFiles[$key] : $defaultValue);
-	
-			if (is_string($ret) === true)
-				$ret = urldecode(preg_replace('/((\%5C0+)|(\%00+))/i', '', urlencode($ret)));
-			return !is_string($ret)? $ret : stripslashes($ret);
-		}
 	
 		static public function getIsset($key)
 		{
 			if (!isset($key) || empty($key) || !is_string($key))
 				return false;
 			return isset($_POST[$key]) ? true : (isset($_GET[$key]) ? true : false);
+		}
+
+		static public function uploadFile() 
+		{
+			$dossier = 'public/img/';
+			$fichier = basename($_FILES['image']['name']);
+			$taille_maxi = 50000000;
+			$taille = filesize($_FILES['image']['tmp_name']);
+			$extensions = array('.png', '.gif', '.jpg', '.jpeg');
+			$extension = strrchr($_FILES['image']['name'], '.');
+
+            if(!in_array($extension, $extensions)) { //Si l'extension n'est pas dans le tableau
+                $erreur = 'Seuls les fichiers de type png, gif, jpg ou jpeg sont acceptés';
+            }
+            if($taille>$taille_maxi) {
+                $erreur = 'Le fichier est trop volumineux';
+            }
+            if(!isset($erreur)) { //S'il n'y a pas d'erreur, on upload
+                //Formatage du nom du fichier
+                $fichier = strtr($fichier,
+                    'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
+                    'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+                $fichier = preg_replace('/([^.a-z0-9]+)/i', '-', $fichier);
+                move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $fichier);
+                $path = './public/img/' . $fichier;
+            }
+            else {
+                echo $erreur;
+            }
 		}
 		
 		static public function checkMail($mail) {
