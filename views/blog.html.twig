@@ -11,7 +11,7 @@
         {% for post in posts %}
         {% if post.status == 1 %}
         <div class="col-xl-6 col-lg-12 text-center">
-            <a href="?controller=post&action=single&id={{ post.id }}">
+            <a href="/post/single/{{ post.id }}">
             <div class="article-card">
             <div class="article-img">
                 <img src="{{ post.image }}">

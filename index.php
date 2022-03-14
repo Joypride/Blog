@@ -9,7 +9,7 @@ require 'vendor/autoload.php';
 
 $controller_default = "Home"; // Nom du contrôleur par défaut
 
-    if (isset($_GET['controller'])) {
+    if (isset($_GET['controller']) && $_GET['controller']) {
         $nom_controller = ucfirst($_GET['controller']);
     }
     else {

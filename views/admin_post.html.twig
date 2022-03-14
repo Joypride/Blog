@@ -14,7 +14,7 @@
     <tbody>
       <tr>
         <td class="text-center">
-            <div><a href="?controller=post&action=add"><i class="fas fa-plus-circle fa-2x add-post"></i></a></div>
+            <div><a href="/post/add"><i class="fas fa-plus-circle fa-2x add-post"></i></a></div>
         </td>
       </tr>
     </tbody>
@@ -33,10 +33,10 @@
       <td class="text-center">      
         <div class="d-flex justify-content-center flex-wrap">
           {% for tag in tags %} 
-            <span class="all-tags mr-3 mt-2">{{ tag.title }}<a href="?controller=category&action=delete&id={{ tag.id }}"><i class="fas fa-times article-action"></i></a></span>
+            <span class="all-tags mr-3 mt-2">{{ tag.title }}<a href="/category/delete/{{ tag.id }}"><i class="fas fa-times article-action"></i></a></span>
           {% endfor %}
         </div>
-        <form method="post" action="?controller=category&action=add">
+        <form method="post" action="/category/add">
           <span class="tag-input mt-4">
             <input 
               type="text"
@@ -71,9 +71,9 @@
         <td class="align-middle">{{ post.title }}</td>
         <td class="align-middle">
             <div class="col-lg-4 post-action d-flex align-items-center">
-                <div><a href="?controller=post&action=single&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
-                <div><a href="?controller=post&action=edit&id={{ post.id }}"><i class="fas fa-pen-fancy mr-4 article-action"></i></a></div>
-                <div><a href="?controller=post&action=delete&id={{ post.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-trash mr-4 article-action"></i></div>
+                <div><a href="/post/single/{{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                <div><a href="/post/edit/{{ post.id }}"><i class="fas fa-pen-fancy mr-4 article-action"></i></a></div>
+                <div><a href="/post/delete/{{ post.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-trash mr-4 article-action"></i></div>
             </div>
         </td>
       </tr>
@@ -98,9 +98,9 @@
         <td class="align-middle">{{ post.title }}</td>
         <td class="align-middle">
             <div class="col-lg-4 post-action d-flex align-items-center">
-                <div><a href="?controller=post&action=single&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
-                <div><a href="?controller=post&action=delete&id={{ post.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-trash mr-4 article-action"></i></div>
-                <div class="position-relative"><a href="?controller=post&action=single&id={{ post.id }}#comment"><i class="far fa-comment-dots article-action"></i></div>
+                <div><a href="/post/single/{{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                <div><a href="/post/delete/{{ post.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-trash mr-4 article-action"></i></div>
+                <div class="position-relative"><a href="/post/single/{{ post.id }}#comment"><i class="far fa-comment-dots article-action"></i></div>
             </div>
         </td>
       </tr>
@@ -126,7 +126,7 @@
       <td class="align-middle">{{ post.title }}</td>
       <td class="align-middle">
           <div class="col-lg-4 post-action d-flex align-items-center">
-              <div><a href="?controller=post&action=single&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
+              <div><a href="/post/single/{{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
           </div>
       </td>
     </tr>

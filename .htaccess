@@ -1,5 +1,14 @@
 Options +FollowSymlinks
-Rewrite Engine on
+
+<IfModule mod_rewrite.c>
+<IfModule mod_env.c>
+SetEnv HTTP_MOD_REWRITE On
+</IfModule>
+
+RewriteEngine on
 
 # Accueil
-RewriteRule ^?controller=home&action=login$ /connexion [L]
+
+RewriteRule ^([a-zA-Z]*)/?([a-zA-Z]*)?/?$ index.php?controller=$1&action=$2 [NC,L]
+
+RewriteRule ^([a-zA-Z]*)/?([a-zA-Z]*)?/?([a-zA-Z0-9]*)?/?$ index.php?controller=$1&action=$2&id=$3 [NC,L]

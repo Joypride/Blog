@@ -21,8 +21,8 @@
         <td class="align-middle">{{ user.name }} {{ user.surname }}</td>
         <td class="align-middle">
             <div class="post-action mx-auto d-flex align-items-center justify-content-end">
-                <div><a href="?controller=user&action=validateUser&id={{ user.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
-                <div><a href="?controller=user&action=delete&id={{ user.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-times mr-4 article-action"></i></div>
+                <div><a href="/user/validateUser/{{ user.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
+                <div><a href="/user/delete/{{ user.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-times mr-4 article-action"></i></div>
             </div>
         </td>
       </tr>
@@ -47,9 +47,9 @@
         <td class="align-middle">{{ post.title }}</td>
         <td class="align-middle">
             <div class="post-action mx-auto d-flex align-items-center">
-                <div><a href="?controller=post&action=single&id={{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
-                <div><a href="?controller=post&action=validatePost&id={{ post.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
-                <div><a href="?controller=post&action=deletePostAdmin&id={{ post.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-times mr-4 article-action"></i></div>
+                <div><a href="/post/single/{{ post.id }}"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                <div><a href="/post/validatePost/{{ post.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
+                <div><a href="/post/deletePostAdmin/{{ post.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-times mr-4 article-action"></i></div>
             </div>
         </td>
       </tr>
@@ -75,9 +75,9 @@
         <td class="align-middle w-10">{{ comment.date | date('d/m/Y à h:i') }}</td>
         <td class="align-middle w-15">
             <div class="post-action mx-auto d-flex align-items-center justify-content-center">
-                <div><a href="?controller=post&action=single&id={{ comment.p_id }}#comment"><i class="far fa-eye mr-4 article-action"></i></a></div>
-                <div><a href="?controller=comment&action=validate&id={{ comment.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
-                <div><a href="?controller=comment&action=deleteComment&id={{ comment.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-times mr-4 article-action"></i></div>
+                <div><a href="/post/single/{{ comment.p_id }}#comment"><i class="far fa-eye mr-4 article-action"></i></a></div>
+                <div><a href="/comment/validate/{{ comment.id }}"><i class="fas fa-check mr-4 article-action"></i></a></div>
+                <div><a href="/comment/deleteComment/{{ comment.id }}" onclick="return confirm('Supprimer définitivement ?')"><i class="fas fa-times mr-4 article-action"></i></div>
             </div>
         </td>
       </tr>

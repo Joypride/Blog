@@ -19,7 +19,16 @@ abstract class Controller
 
     public function run() {
         $action = $this->action.'Action';
-        return $this->{$action}();
+        if (method_exists($this, $action)) {
+            return $this->{$action}();
+        } 
+        else {
+            return $this->renderPageNotFound();
+        }
+    }
+
+    public function renderPageNotFound() {
+        return $this->render('404.html.twig');
     }
 
     protected function render ($view, $data = []) {
