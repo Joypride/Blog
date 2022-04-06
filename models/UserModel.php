@@ -62,11 +62,13 @@ class UserModel extends Model {
         return $request->execute();
     }
 
+    // Tous les utilisateurs en attente de validation
     public function allPending()
     {
         return self::getDatabaseInstance()->query("SELECT * FROM user WHERE activated = 0")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
     }
 
+    // Nombre d'utilisateurs en attente de validation
     public function countAllPending()
     {
         return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM user WHERE activated = 0")->fetchColumn();
@@ -86,6 +88,7 @@ class UserModel extends Model {
         return $request->execute();
     }
 
+    // Valider un utilisateur
     public function validateUser($id)
     {
         $request = self::getDatabaseInstance()->prepare("UPDATE user SET activated = 1 WHERE id = :id");

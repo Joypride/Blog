@@ -21,11 +21,13 @@ class CommentModel extends Model {
         $request->execute();
     }
 
+    // Tous les commentaires en attente de validation
     public function allPending()
     {
         return self::getDatabaseInstance()->query("SELECT c.*, p.id as p_id, p.image FROM comment c LEFT JOIN post p ON c.post_id = p.id WHERE c.status = 'pending' ORDER BY date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
     }
 
+    // Nombre de commentaires en attente de validation
     public function countAllPending()
     {
         return self::getDatabaseInstance()->query("SELECT COUNT(*) FROM comment WHERE status = 'pending'")->fetchColumn();
@@ -38,6 +40,7 @@ class CommentModel extends Model {
         return $request->execute();
     }
 
+    // Commentaires validés
     public function validated($id)
     {
         return self::getDatabaseInstance()->query("SELECT c.*, u.id, u.name, u.surname, u.photo FROM comment c LEFT JOIN user u ON c.user_id = u.id LEFT JOIN post p ON c.post_id = p.id WHERE p.id = ".$id." AND c.status = 'validated' ORDER BY date DESC")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);

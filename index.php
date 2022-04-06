@@ -29,5 +29,5 @@ $controller_default = "Home"; // Nom du contrôleur par défaut
         echo $controller->run();
     }
     else {
-        header('Location: ?controller=home&action=error404');
+        header('Location: /home/error404');
     }

@@ -10,6 +10,7 @@ class CategoryModel extends Model {
         return self::getDatabaseInstance()->query("SELECT * FROM category")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);
     }
 
+    // Catégorie associée à un article
     public function category()
     {
         return self::getDatabaseInstance()->query("SELECT DISTINCT c.*, p.category_id FROM category c LEFT JOIN post p ON p.category_id = c.id")->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE);

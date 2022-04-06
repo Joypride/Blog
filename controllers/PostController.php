@@ -13,6 +13,7 @@ class PostController extends Controller {
         return $this->blogAction();
     }
 
+    // Liste des articles
     public function blogAction() {
 
         $m = new PostModel();
@@ -21,7 +22,8 @@ class PostController extends Controller {
         ];
         return $this->render('blog.html.twig', $data);
     }
-
+    
+    // Détail d'un article
     public function singleAction() {
         $m = new PostModel();
         $c = new CommentModel();
@@ -57,6 +59,7 @@ class PostController extends Controller {
         ]);
     }
 
+    // Ajouter un article
     public function addAction()
     {
         $category = new CategoryModel();
@@ -69,7 +72,7 @@ class PostController extends Controller {
 
         if (!empty($_FILES)) {
 
-            Tools::uploadFile();
+            $image = Tools::uploadFile($_FILES['image'], 'public/img/');
 
             if(!empty(Tools::getValue('title')) && !empty(Tools::getValue('category')) && !empty(Tools::getValue('headline')) && !empty(Tools::getValue('content'))) {
                 $m = new PostModel();
@@ -79,16 +82,17 @@ class PostController extends Controller {
                     'headline' => Tools::getValue('headline'),
                     'content' => Tools::getValue('content'),
                     'user' => Tools::getValue('id'),
-                    'image' => $path,
+                    'image' => $image,
                 ];
                 $m->create($post);
-                header('Location: ?controller=user&action=adminPost');
+                header('Location: /user/adminPost');
             } else {
-                header('Location: ?controller=post&action=add');
+                header('Location: /post/add');
             }
         }
     }
 
+    // Modifier un article
     public function editAction()
     {
         $post = new PostModel();
@@ -99,23 +103,28 @@ class PostController extends Controller {
 
     public function updateAction()
     {
-        if (!empty($_FILES)) {
 
-            Tools::uploadFile();
-                
+        $image = NULL;
+
+        if (!empty($_FILES['image'])) {
+            $image = Tools::uploadFile($_FILES['image'], 'public/img/');
+        }
+        
                 if (!empty(Tools::getValue('title')) && !empty(Tools::getValue('category')) && !empty(Tools::getValue('headline')) && !empty(Tools::getValue('content')))
                 {            
                     $model = new PostModel();
                     $tags = new CategoryModel();
                         $post = [
                             'title' => Tools::getValue('title'), 
-                            'category' => Tools::getValue('category'),
+                            'category_id' => Tools::getValue('category'),
                             'headline' => Tools::getValue('headline'),
                             'content' => Tools::getValue('content'),
-                            'id' => Tools::getValue('id'),
-                            'image' => $path
                         ];
-                        $model->edit($post);
+                    $id = Tools::getValue('id');
+                        if ($image) {
+                            $post['image'] = $image;
+                        }
+                        $model->edit($id, $post);
     
                         return $this->render('admin_post.html.twig', [
                             'pending' => $model->pending(Tools::getSession('id')),
@@ -127,7 +136,6 @@ class PostController extends Controller {
                             'tags' => $tags->read(),
                         ]);
                 }
-            }
     }
 
     public function deleteAction()
@@ -135,14 +143,14 @@ class PostController extends Controller {
         $model = new PostModel();
         $id = (int)Tools::getValue('id');
         $model->delete($id);
-        header('Location: ?controller=user&action=adminPost');
+        header('Location: /user/adminPost');
     }
 
     public function validatePostAction() {
         $post = new PostModel();
         $id = (int)Tools::getValue('id');
         $post->validatePost($id);
-        header('Location: ?controller=user&action=superAdmin');
+        header('Location: /user/superAdmin');
     }
 
     public function deletePostAdminAction()
@@ -150,6 +158,6 @@ class PostController extends Controller {
         $post = new PostModel();
         $id = (int)Tools::getValue('id');
         $post->delete($id);
-        header('Location: ?controller=user&action=superAdmin');
+        header('Location: /user/superAdmin');
     }
 }

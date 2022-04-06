@@ -18,7 +18,7 @@ class CategoryController extends Controller {
             
             $tag->create($name);
 
-            header('Location: ?controller=user&action=adminPost');
+            header('Location: /user/adminPost');
         }
     }
 
@@ -27,6 +27,6 @@ class CategoryController extends Controller {
         $tag = new CategoryModel();
         $id = (int)Tools::getValue('id');
         $tag->delete($id);
-        header('Location: ?controller=user&action=adminPost');
+        header('Location: /user/adminPost');
     }
 }

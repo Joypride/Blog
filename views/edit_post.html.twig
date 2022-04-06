@@ -27,9 +27,9 @@
             <div class="form-group">
               <div class="form-group">
                 <select type="text" class="form-control" name="category" required="required">
-                  <option value"">Catégorie</option>
+                  <option value="">Catégorie</option>
                   {% for c in category %}
-                  <option value="{{ c.id }}">{{ c.title }}</option>
+                  <option value="{{ c.id }}" {% if c.id == post.category_id %}selected{% endif %}>{{ c.title }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -45,7 +45,7 @@
             <div class="form-group">
                <input type="submit" value="Modifier" class="submit-form mt-4" />
             </div>
-            <input type="hidden" name="id" value="{{ post.id }}">
+            <input type="hidden" name="id" value="{{ post.post_id }}">
           </form>
         </div>
       </div>

@@ -16,6 +16,7 @@ class UserController extends Controller {
         return $this->render('index.html.twig');
     }
 
+    // Inscription
     public function dataRegistrationAction() {
         $model = new UserModel();
 
@@ -56,6 +57,7 @@ class UserController extends Controller {
         return $this->render('register_process.html.twig', $data);
     }
 
+    // Connexion
     public function loginAction() {
 
         $model = new UserModel();
@@ -101,6 +103,7 @@ class UserController extends Controller {
         return $this->render('admin.html.twig');
     }
 
+    // Liste des articles de l'utilisateur
     public function adminPostAction() {
         $posts = new PostModel();
         $tags = new CategoryModel();
@@ -116,6 +119,7 @@ class UserController extends Controller {
         ]);
     }
 
+    // Liste des utilisateurs, articles, commentaires en attente de validation
     public function superAdminAction() {
         $posts = new PostModel();
         $comments = new CommentModel();
@@ -155,7 +159,7 @@ class UserController extends Controller {
             echo $e->getMessage();
         }
         
-        header('Location: ?controller=user&action=superAdmin');
+        header('Location: /user/superAdmin');
     }
 
     public function deleteAction()
@@ -163,20 +167,22 @@ class UserController extends Controller {
         $user = new UserModel();
         $id = (int)Tools::getValue('id');
         $user->delete($id);
-        header('Location: ?controller=user&action=superAdmin');
+        header('Location: /user/superAdmin');
     }
 
+    // Informations personnelles
     public function settingsAction() {
         $model = new UserModel();
         $id = (int)Tools::getValue('id');
         return $this->render('settings.html.twig', ['info' => $model->find($id)]);
     }
 
+    // Modifier ses informations personnelles
     public function editInfoAction() {
         
         if (!empty($_FILES)) {
 
-            Tools::uploadFile();
+            $image = Tools::uploadFile($_FILES['image'], 'public/img/');
             
             if (Tools::getValue('name') && Tools::getValue('surname') && Tools::getValue('email'))
             {            
@@ -186,7 +192,7 @@ class UserController extends Controller {
                         'surname' => Tools::getValue('surname'),
                         'email' => Tools::getValue('email'),
                         'id' => Tools::getSession('id'),
-                        'image' => $path
+                        'image' => $image
                     ];
                     $m->update($user);
 

@@ -18,12 +18,12 @@ abstract class Controller
     }
 
     public function run() {
-        $action = $this->action.'Action';
+        $action = $this->action.'Action'; // On assigne le nom de l'action
         if (method_exists($this, $action)) {
-            return $this->{$action}();
+            return $this->{$action}(); // Si l'action existe on la retourne
         } 
         else {
-            return $this->renderPageNotFound();
+            return $this->renderPageNotFound(); // Si elle n'existe pas, on retourne la page 404
         }
     }
 

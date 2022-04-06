@@ -19,7 +19,7 @@
         
                 <div class="article-meta text-left">
                     <h2>{{ post.title }}</h2>
-                    <span class="author-tag date mt-2">Posté le: {{ single.creation_date | date("d.m.Y") }}</span>
+                    <span class="author-tag date mt-2">Posté le: {{ post.creation_date | date("d.m.Y") }}</span>
                         {% if update_date is not same as NULL %}
                         <span class="author-tag date mt-2">Dernière modification le: {{ post.updated_date | date("d.m.Y") }}</span>
                         {% endif %}

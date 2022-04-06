@@ -18,7 +18,7 @@ class CommentController extends Controller {
             
             $tag->create($name);
 
-            header('Location: ?controller=user&action=adminPost');
+            header('Location: /user/adminPost');
         }
     }
 
@@ -26,17 +26,13 @@ class CommentController extends Controller {
         $comment = new CommentModel();
         $id = (int)Tools::getValue('id');
         $comment->delete($id);
-        header('Location: ?controller=user&action=superAdmin');
+        header('Location: /user/superAdmin');
     }
 
     public function validateAction() {
         $comment = new CommentModel();
         $id = (int)Tools::getValue('id');
         $comment->validate($id);
-        header('Location: ?controller=user&action=superAdmin');
-    }
-
-    public function newCommentAction() {
-
+        header('Location: /user/superAdmin');
     }
 }

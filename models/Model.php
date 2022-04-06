@@ -7,7 +7,7 @@ class Model {
     protected static $db;
 
     public static function getDatabaseInstance() {
-        if (!self::$db) {
+        if (!self::$db) { // Vérifie l'existence d'une instance
             $dsn = "mysql:host=localhost;dbname=blog";
             $login = "root";
             $mdp = '';
