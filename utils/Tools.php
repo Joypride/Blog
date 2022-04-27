@@ -58,7 +58,7 @@ namespace Utils;
             if($taille>$taille_maxi) {
                 $erreur = 'Le fichier est trop volumineux';
             }
-            if(!isset($erreur)) { //S'il n'y a pas d'erreur, on upload
+            if(empty($erreur)) { //S'il n'y a pas d'erreur, on upload
                 //Formatage du nom du fichier
                 $fichier = strtr($fichier,
                     'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',

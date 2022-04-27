@@ -7,14 +7,17 @@ use Models\CommentModel;
 use Models\CategoryModel;
 use Utils\Tools;
 
-class PostController extends Controller {
-    
-    public function default() {
+class PostController extends Controller
+{
+
+    public function default()
+    {
         return $this->blogAction();
     }
 
     // Liste des articles
-    public function blogAction() {
+    public function blogAction()
+    {
 
         $m = new PostModel();
         $data = [
@@ -22,33 +25,32 @@ class PostController extends Controller {
         ];
         return $this->render('blog.html.twig', $data);
     }
-    
+
     // Détail d'un article
-    public function singleAction() {
+    public function singleAction()
+    {
         $m = new PostModel();
         $c = new CommentModel();
         $id = (int)Tools::getValue('id');
         $content = false;
 
         if (Tools::getValue('content')) {
-            if(!empty(Tools::getValue('content')) && (Tools::getSession('id')))
-            {
-            $comment = [
-                'content' => Tools::getValue('content'), 
-                'post' => Tools::getValue('id'),
-                'user' => Tools::getSession('id')
-            ];
-            $c->create($comment);
-            } else if (!empty(Tools::getValue('content')) && !empty(Tools::getValue('name')) && !empty(Tools::getValue('surname')))
-            {
-            $name = Tools::getValue('name');
-            $surname = Tools::getValue('surname');
-            $comment = [
-                'content' => Tools::getValue('content'), 
-                'post' => Tools::getValue('id'),
-                'user' => NULL
-            ];
-            $c->create($comment);
+            if (!empty(Tools::getValue('content')) && (Tools::getSession('id'))) {
+                $comment = [
+                    'content' => Tools::getValue('content'),
+                    'post' => Tools::getValue('id'),
+                    'user' => Tools::getSession('id')
+                ];
+                $c->create($comment);
+            } else if (!empty(Tools::getValue('content')) && !empty(Tools::getValue('name')) && !empty(Tools::getValue('surname'))) {
+                $name = Tools::getValue('name');
+                $surname = Tools::getValue('surname');
+                $comment = [
+                    'content' => Tools::getValue('content'),
+                    'post' => Tools::getValue('id'),
+                    'user' => NULL
+                ];
+                $c->create($comment);
             }
             $content = 'Votre commentaire a bien été soumis et sera publié dès sa validation par un modérateur';
         }
@@ -68,27 +70,34 @@ class PostController extends Controller {
         ]);
     }
 
-    public function insertAction() {
+    public function insertAction()
+    {
+        if (!empty(Tools::getValue('title')) && !empty(Tools::getValue('category')) && !empty(Tools::getValue('headline')) && !empty(Tools::getValue('content'))) {
 
-        if (!empty($_FILES)) {
+            $image = '';
 
-            $image = Tools::uploadFile($_FILES['image'], 'public/img/');
+            if (!empty($_FILES)) {
 
-            if(!empty(Tools::getValue('title')) && !empty(Tools::getValue('category')) && !empty(Tools::getValue('headline')) && !empty(Tools::getValue('content'))) {
-                $m = new PostModel();
-                $post = [
-                    'title' => Tools::getValue('title'), 
-                    'category' => Tools::getValue('category'),
-                    'headline' => Tools::getValue('headline'),
-                    'content' => Tools::getValue('content'),
-                    'user' => Tools::getValue('id'),
-                    'image' => $image,
-                ];
-                $m->create($post);
-                header('Location: /user/adminPost');
-            } else {
-                header('Location: /post/add');
+                $img = Tools::uploadFile($_FILES['image'], 'public/img/');
+
+                if ($img['path']) {
+                    $image = $img['path'];
+                }
             }
+
+            $m = new PostModel();
+            $post = [
+                'title' => Tools::getValue('title'),
+                'category' => Tools::getValue('category'),
+                'headline' => Tools::getValue('headline'),
+                'content' => Tools::getValue('content'),
+                'user' => Tools::getValue('id'),
+                'image' => $image,
+            ];
+            $m->create($post);
+            header('Location: /user/adminPost');
+        } else {
+            header('Location: /post/add');
         }
     }
 
@@ -103,39 +112,43 @@ class PostController extends Controller {
 
     public function updateAction()
     {
+        if (!empty(Tools::getValue('title')) && !empty(Tools::getValue('category')) && !empty(Tools::getValue('headline')) && !empty(Tools::getValue('content'))) {
 
-        $image = NULL;
+            $image = NULL;
 
-        if (!empty($_FILES['image'])) {
-            $image = Tools::uploadFile($_FILES['image'], 'public/img/');
-        }
-        
-                if (!empty(Tools::getValue('title')) && !empty(Tools::getValue('category')) && !empty(Tools::getValue('headline')) && !empty(Tools::getValue('content')))
-                {            
-                    $model = new PostModel();
-                    $tags = new CategoryModel();
-                        $post = [
-                            'title' => Tools::getValue('title'), 
-                            'category_id' => Tools::getValue('category'),
-                            'headline' => Tools::getValue('headline'),
-                            'content' => Tools::getValue('content'),
-                        ];
-                    $id = Tools::getValue('id');
-                        if ($image) {
-                            $post['image'] = $image;
-                        }
-                        $model->edit($id, $post);
-    
-                        return $this->render('admin_post.html.twig', [
-                            'pending' => $model->pending(Tools::getSession('id')),
-                            'validated' => $model->validated(Tools::getSession('id')),
-                            'refused' => $model->refused(Tools::getSession('id')),
-                            'countp' => $model->countPending(Tools::getSession('id')),
-                            'countv' => $model->countValidated(Tools::getSession('id')),
-                            'countr' => $model->countRefused(Tools::getSession('id')),
-                            'tags' => $tags->read(),
-                        ]);
+            if (!empty($_FILES)) {
+
+                $img = Tools::uploadFile($_FILES['image'], 'public/img/');
+
+                if ($img['path']) {
+                    $image = $img['path'];
                 }
+            }
+
+            $model = new PostModel();
+            $tags = new CategoryModel();
+            $post = [
+                'title' => Tools::getValue('title'),
+                'category_id' => Tools::getValue('category'),
+                'headline' => Tools::getValue('headline'),
+                'content' => Tools::getValue('content'),
+            ];
+            $id = Tools::getValue('id');
+            if ($image) {
+                $post['image'] = $image;
+            }
+            $model->edit($id, $post);
+
+            return $this->render('admin_post.html.twig', [
+                'pending' => $model->pending(Tools::getSession('id')),
+                'validated' => $model->validated(Tools::getSession('id')),
+                'refused' => $model->refused(Tools::getSession('id')),
+                'countp' => $model->countPending(Tools::getSession('id')),
+                'countv' => $model->countValidated(Tools::getSession('id')),
+                'countr' => $model->countRefused(Tools::getSession('id')),
+                'tags' => $tags->read(),
+            ]);
+        }
     }
 
     public function deleteAction()
@@ -146,7 +159,8 @@ class PostController extends Controller {
         header('Location: /user/adminPost');
     }
 
-    public function validatePostAction() {
+    public function validatePostAction()
+    {
         $post = new PostModel();
         $id = (int)Tools::getValue('id');
         $post->validatePost($id);

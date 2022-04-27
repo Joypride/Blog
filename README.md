@@ -11,11 +11,13 @@
 
 ### Installation
 
-- Clonez le Repositary.
+- Clonez le Repository.
+
+- Téléchargez et installez les librairies avec la commande ``composer install``
 
 - Créez une base de données sur votre SGBD et importez le fichier blog.sql
 
-- Configurez la connexion à la base de donnée dans le fichier ``Model.php``
+- Configurez la connexion à la base de donnée dans le fichier ``models/Model.php``
 
 ## Fabriqué avec
 
