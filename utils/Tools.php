@@ -67,9 +67,6 @@ namespace Utils;
                 move_uploaded_file($file['tmp_name'], $dossier . $fichier);
                 $path = './public/img/' . $fichier;
             }
-            else {
-                // echo $erreur;
-            }
 			return ['path' => $path, 'error'=> $erreur];
 		}
 		
